@@ -17,6 +17,11 @@ from django.contrib import admin
 from django.urls import path, re_path
 from . import views
 urlpatterns = [
-    re_path(r'^index/$', views.hello, name='index'),
+    path("", views.hello, name='empty'),
+    re_path(r'^index/$', views.index, name='index'),
     re_path(r'^my_resume/$', views.my_resume, name='resume'),
+    re_path(r'^recruiter_page/$', views.recruiter_page, name='recruiter_page'),
+    re_path(r'^dashboard/$', views.dashboard, name='dashboard'),
+    re_path(r'^login/$', views.login, name='login'),
+    re_path(r'^register/$', views.register, name='register'),
 ]
