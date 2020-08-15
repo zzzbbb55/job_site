@@ -1,4 +1,5 @@
 {% load static %}
+<!DOCTYPE html>
 <html lang="en">
 <title>Job Site</title>
 <meta charset="UTF-8">
@@ -23,10 +24,21 @@
       <!-- Right-sided navbar links -->
       <div class="w3-right ">
         <!-- <a href="#about" class="w3-bar-item w3-button">ABOUT</a> -->
-        <a href="/login" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Zzb</a>
+        <a href="/login" id="username"  style="display: none;" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Login</a>
+        <a  id="spinner"  class="w3-bar-item w3-button"> <i class="fa fa-spinner fa-spin" aria-hidden="true"></i></a>
+       
+        
+        <a href="/user_logout" id="logout" style="display: none;" class="w3-bar-item w3-button"><i class="fa fa-logout"></i> logout</a>
+        <!-- <a class="w3-bar-item ">
+          <form action="/user_logout" method="get">
+            <input type="submit" class="w3-button" value="log out">
+         </form>
+        </a> -->
+        
         <!-- <a href="#work" class="w3-bar-item w3-button"><i class="fa fa-th"></i> Me</a> -->
         <!-- <a href="#pricing" class="w3-bar-item w3-button"><i class="fa fa-usd"></i> PRICING</a>
         <a href="#contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a> -->
+        <a  id="username_storage" style="display: none;"><i class="fa fa-user"></i>{{username}}</a>
       </div>
       <!-- Hide right-floated links on small screens and replace them with a menu icon -->
   
@@ -60,15 +72,54 @@
   </footer>
   
   <script>
-  // Used to toggle the menu on small screens when clicking on the menu button
-  function myFunction() {
-    var x = document.getElementById("navDemo");
-    if (x.className.indexOf("w3-show") == -1) {
-      x.className += " w3-show";
-    } else { 
-      x.className = x.className.replace(" w3-show", "");
-    }
+window.onload = function get_status(){
+  user_load();
+  if ("username" in localStorage){
+    document.getElementById('username').href = ""
+    document.getElementById('username').innerHTML = '<i class="fa fa-user"></i> ' +  localStorage["username"]
+    document.getElementById('logout').style.display = ""
+  }else{
+    
   }
+  document.getElementById('username').style.display = ""
+  document.getElementById('spinner').style.display = "none"
+  // var user_bar = document.getElementById('username_storage').innerText;
+  // if (user_bar == " Login"){
+    
+  // }else{
+  //   document.getElementById('username').href = ""
+  //   document.getElementById('logout').style.display = ""
+  // }
+
+
+}
+
+function user_load(){
+        var not_dis_user = document.getElementById('username_storage').innerText;
+        // console.log(not_dis_user == "")
+        if (not_dis_user == "logout"){
+          localStorage.removeItem("username")
+        }else
+        if (not_dis_user != ""){
+          localStorage.setItem("username" , not_dis_user)
+        }
+        
+};
+
+// function user_logout(){
+//         var Http = new XMLHttpRequest();
+//         var url = "http://10.62.89.250:8090/logout"
+//         Http.open("POST",url);
+//         Http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+//         Http.send();
+//         Http.onreadystatechange=(e)=>{
+//             if (Http.readyState === 4){
+//             var extra_json = Http.responseText;
+//             window.location.href="http://10.62.89.250:8090/lcc"
+//             };
+//     };
+// };
+</script>
   </script>
   
   </body>
