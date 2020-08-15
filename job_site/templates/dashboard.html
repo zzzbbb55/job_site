@@ -1,6 +1,6 @@
 {%extends "base.html" %}
 {% load static %}
-    {% block content %}
+{% block content %}
 <!-- Sidebar/menu -->
 
 <div class="w3-main" style="margin-left:10px;margin-top:73px;">
@@ -9,92 +9,216 @@
     
     <div class="">
         <img src='{% static "images/avatar3.png" %}' class="w3-circle w3-margin-right" style="width:46px">
-      <span>Welcome, <strong>Zzb</strong> <button class="w3-button w3-light-grey " >Candidate</button></span> <br>
+      <span>Welcome, <strong>{{username}}</strong> <button class="w3-button w3-light-grey " >{{user_type}}</button></span> <br>
     </div>
   </div>
  <hr>
-  <div class="w3-container" style="width: 80%; ">
+  <div id= "candidate_table" class="w3-container" style="width: 80%; ">
 
   <h5>Your Status</h5>
     <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
       <tr>
         <td>Name</td>
-        <td>zzb</td>
+        <td><i class="fa fa-user w3-text-green"></i> {{username}}</td>
       </tr>
       <tr>
         <td>type</td>
-        <td>Candidate</td>
+        <td><i class="fa fa-group w3-text-blue-gray"></i>  {{user_type}}</td>
       </tr>
-      <tr>
-        <td>Resume</td>
-        <td>uploaded</td>
-      </tr>
+        <tr>
+          <td>Resume</td>
+          <td><i class="fa fa-download-cyan"></i> {{resume_url}}</td>
+        </tr>  
     </table>
   </div>
 
+
+  <div id= "recruiter_table" style="display:none" class="w3-container" style="width: 80%; ">
+
+    <h5>Your Company Status</h5>
+      <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+        <tr>
+          <td>Name</td>
+          <td><i class="fa fa-building w3-text-blue"></i> {{username}}</td>
+        </tr>
+        <tr>
+          <td>type</td>
+          <td><i class="fa fa-group w3-text-blue-gray"></i> {{user_type}}</td>
+        </tr>
+          <tr>
+            <td>Company Location</td>
+            <td><i class="fa fa-map-marker w3-text-red"></i> {{company_info}}</td>
+          </tr>
+          <tr>
+            <td>Company Describe</td>
+            <td><i class="fa fa-info w3-text-orange"></i> {{company_describe}}</td>
+          </tr>   
+      </table>
+    </div>
+
   <!-- Header -->
-  <header class="w3-container" style="padding-top:22px">
-    <h5><b><i class="fa fa-dashboard"></i> My Dashboard</b></h5>
-  </header>
 
-  <div class="w3-row-padding w3-margin-bottom">
-    <div class="w3-quarter">
-      <div class="w3-container w3-indigo w3-padding-16">
-        <div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
-        <div class="w3-right">
-          <h3>52</h3>
-        </div>
-        <div class="w3-clear"></div>
-        <h4>New Interview Invited</h4>
+      <div id="recruiter_dashboard" style="display:none">
+        <header class="w3-container" style="padding-top:22px">
+          <h5><b><i class="fa fa-dashboard"></i> My Dashboard</b></h5>
+        </header>
+      
+        <div class="w3-row-padding w3-margin-bottom">
+          <div class="w3-quarter">
+            <div class="w3-container w3-indigo w3-padding-16 w3-hover-opacity" onclick='window.location.href="/recruiter_page#received"'>
+              <div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
+              <div class="w3-right">
+                <!-- <h3>52</h3> -->
+              </div>
+              <div class="w3-clear"></div>
+              <h4>Reciviced Resume</h4>
+            </div>
+          </div>
+          <div class="w3-quarter">
+            <div class="w3-container w3-blue w3-padding-16 w3-hover-opacity" onclick='window.location.href="/recruiter_page#joblist"'>
+              <div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
+              <div class="w3-right">
+                <!-- <h3>99</h3> -->
+              </div>
+              <div class="w3-clear"></div>
+              <h4>Posted Job</h4>
+            </div>
+          </div>
+          <div class="w3-quarter">
+            <div class="w3-container w3-teal w3-padding-16 w3-hover-opacity" onclick="document.getElementById('new_job').style.display='block'">
+              <div class="w3-left"><i class="fa fa-plus w3-xxxlarge"></i></div>
+              <div class="w3-right">
+                <!-- <h3>23</h3> -->
+              </div>
+              <div class="w3-clear"></div>
+              <h4>Post New Job</h4>
+            </div>
+          </div>
+          <div class="w3-quarter">
+            <div class="w3-container w3-grey w3-text-white w3-padding-16">
+              <div class="w3-left"><i class="fa fa-cog w3-xxxlarge"></i></div>
+              <div class="w3-right">
+      <!--          <h3>50</h3>-->
+              </div>
+              <div class="w3-clear"></div>
+              <h4>Settings</h4>
+            </div>
+          </div>
+        <hr>
+      
+      
       </div>
-    </div>
-    <div class="w3-quarter">
-      <div class="w3-container w3-blue w3-padding-16">
-        <div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
-        <div class="w3-right">
-          <h3>99</h3>
-        </div>
-        <div class="w3-clear"></div>
-        <h4>Views</h4>
       </div>
-    </div>
-    <div class="w3-quarter">
-      <div class="w3-container w3-teal w3-padding-16">
-        <div class="w3-left"><i class="fa fa-history w3-xxxlarge"></i></div>
-        <div class="w3-right">
-          <h3>23</h3>
-        </div>
-        <div class="w3-clear"></div>
-        <h4>My Send Record</h4>
+
+      <div id="candidate_dashboard">
+        <header class="w3-container" style="padding-top:22px">
+          <h5><b><i class="fa fa-dashboard"></i> My Dashboard</b></h5>
+        </header>
+        <div class="w3-row-padding w3-margin-bottom">
+          <div class="w3-quarter">
+            <div class="w3-container w3-indigo w3-padding-16 w3-hover-opacity" onclick='window.location.href="/index#joblist"'>
+              <div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
+              <div class="w3-right">
+                <!-- <h3>52</h3> -->
+              </div>
+              <div class="w3-clear"></div>
+              <h4>Find Job</h4>
+            </div>
+          </div>
+          <div class="w3-quarter">
+            <div class="w3-container w3-blue w3-padding-16 w3-hover-opacity" onclick='window.location.href="/index/"'>
+              <div class="w3-left"><i class="fa fa-history w3-xxxlarge"></i></div>
+              <div class="w3-right">
+                <!-- <h3>99</h3> -->
+              </div>
+              <div class="w3-clear"></div>
+              <h4>Send Resume Record</h4>
+            </div>
+          </div>
+          <div class="w3-quarter">
+            <div class="w3-container w3-teal w3-padding-16 w3-hover-opacity">
+              <div class="w3-left"><i class="fa fa-upload w3-xxxlarge"></i></div>
+              <div class="w3-right">
+                <!-- <h3>23</h3> -->
+              </div>
+              <div class="w3-clear"></div>
+              <h4>Upload Resume</h4>
+            </div>
+          </div>
+          <div class="w3-quarter">
+            <div class="w3-container w3-grey w3-text-white w3-padding-16">
+              <div class="w3-left"><i class="fa fa-cog w3-xxxlarge"></i></div>
+              <div class="w3-right">
+      <!--          <h3>50</h3>-->
+              </div>
+              <div class="w3-clear"></div>
+              <h4>Settings</h4>
+            </div>
+          </div>
+    
       </div>
-    </div>
-    <div class="w3-quarter">
-      <div class="w3-container w3-grey w3-text-white w3-padding-16">
-        <div class="w3-left"><i class="fa fa-cog w3-xxxlarge"></i></div>
-        <div class="w3-right">
-<!--          <h3>50</h3>-->
-        </div>
-        <div class="w3-clear"></div>
-        <h4>Settings</h4>
+
+  </div>
+  
+  
+  
+
+ <!-- modal -->
+  <div id="new_job" style="display:none" class="w3-modal">
+    <div class="w3-modal-content w3-animate-zoom w3-card-4">
+      <header class="w3-container w3-teal"> 
+        <span onclick="document.getElementById('new_job').style.display='none'" 
+        class="w3-button w3-display-topright">&times;</span>
+        <h2>Post a New Job</h2>
+      </header>
+      <div class="w3-container">
+        <form action="/user_login/" method="post" id="new_job_form">
+  
+          <p class="w3-left"><label><i class="fa fa-user"></i> Job Title</label></p>
+          <input class="w3-input w3-border" type="text" name="job_title"  placeholder="Java programer" required>
+
+          <p class="w3-left"><label><i class="fa fa-user"></i> Company:</label></p>
+          <input class="w3-input w3-border" type="text" name="company" value="{{username}}" placeholder="" required disabled>
+
+          <p class="w3-left"><label><i class="fa fa-user"></i> Location:</label></p>
+          <input class="w3-input w3-border" type="text" name="location" value="{{company_info}}" placeholder="eg: London" required>
+
+          <p class="w3-left"><label><i class="fa fa-user"></i> Salary:</label></p>
+          <input class="w3-input w3-border" type="text" name="salary" placeholder="eg: 12k~20k" required>
+
+          <p class="w3-left"><label><i class="fa fa-user"></i> Requirements:</label></p>
+          <p>
+            <textarea class="w3-input w3-border" rows="5" cols="60" name="requirements" id="requirements" form="new_job_form"></textarea>
+          </p>
+          <!-- <p><i class="fa fa-fw fa-clock-o"></i>  Posted date: 2020-08-14</p> -->
+          <input  type="submit" class="w3-button w3-block w3-teal w3-padding-16 w3-section w3-right"  value="Post" ></i></input>
+  
+      </form>
+
       </div>
+      <!-- <footer class="w3-container w3-teal">
+        <p>Modal Footer</p>
+      </footer> -->
     </div>
   </div>
-<hr>
-<div class="w3-row-padding w3-margin-bottom">
-
-    <div class="w3-quarter">
-      <div class="w3-container w3-cyan w3-text-white w3-padding-16">
-        <div class="w3-left"><i class="fa fa-upload w3-xxxlarge"></i></div>
-        <div class="w3-right">
-<!--          <h3>50</h3>-->
-        </div>
-        <div class="w3-clear"></div>
-        <h4>Upload Your Resume</h4>
-      </div>
-    </div>
-  </div>
-  <hr>
-
 
 </div>
+
+{% endblock %}
+
+{% block init_func %}
+var not_dis_user = document.getElementById('username_storage').innerText;
+    var not_dis_user_type = document.getElementById('usertype_storage').innerText;
+
+    if (not_dis_user_type == "candidate"){
+      document.getElementById('recruiter_table').style.display="none"
+      document.getElementById('candidate_table').style.display=""
+      document.getElementById('recruiter_dashboard').style.display="none"
+      document.getElementById('candidate_dashboard').style.display=""
+    }else{
+      document.getElementById('candidate_table').style.display="none"
+      document.getElementById('recruiter_table').style.display=""
+      document.getElementById('recruiter_dashboard').style.display=""
+      document.getElementById('candidate_dashboard').style.display="none"
+    }
 {% endblock %}

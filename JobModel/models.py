@@ -9,5 +9,6 @@ class User(models.Model):
 class recruiter(models.Model):
     company_name = models.CharField(max_length=30)
     password = models.CharField(max_length=300)
+    info = models.CharField(max_length=500,default="")
     describe = models.CharField(max_length=500)
     user_type = models.CharField(max_length=100)
