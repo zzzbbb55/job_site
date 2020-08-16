@@ -21,11 +21,21 @@ def get_user_name_and_type(request_obj):
         context['user_type'] = "logout"
     return context
 
+
 def index(request):
     context =  get_user_name_and_type(request)
-    # if context["user_type"] == "recruiter":
-    #     return redirect(reverse("recruiter_page"))
-    print(hash(request))
+    job_list = job_item.objects.all().order_by("posted_date").reverse()
+    display_job_list = list()
+    for each_job in job_list:
+        display_job_list.append({"id":each_job.id,
+                                 "job_title": each_job.job_title,
+                                 "company":each_job.company,
+                                 "location":each_job.location,
+                                 "salary":each_job.salary,
+                                 "requirements":each_job.requirement,
+                                 "received_resume":each_job.received_resume,
+                                 "data":each_job.posted_date.strftime("%Y-%m-%d")})
+    context["display_job_list"] = display_job_list
     return render(request, 'index.html', context)
 
 def my_resume(request):
@@ -92,21 +102,22 @@ def user_login(request):
                 raise Exception("error: wrong password")  
             
             if user_type == "recruiter":
-                return redirect(reverse("recruiter_page"))
+                return redirect("/message/ok/%s_has_login/recruiter_page/" % username.replace(" ","_"))
             else:
-                return redirect(reverse("index"))
+                return redirect("/message/ok/%s_has_login/index/" % username.replace(" ","_"))
 
                 
         else:
             raise Exception("not support get")
     except Exception as e:
         message= str(e)
-        return HttpResponse(message)
+        message = message.replace(" ","_")
+        return redirect("/message/error/%s/login/" % message)
 
 def user_logout(request):
     if "user" in request.session:
         request.session.pop("user")
-    return redirect(reverse("index"))
+    return redirect("/message/ok/user_has_logout/index/")
 
 def user_register(request):
     # if request.POST:
@@ -137,10 +148,11 @@ def user_register(request):
                     raise ( "error : company existed, please login")
             else:
                 raise ( "error : password is not same as password_confirm")
-        return HttpResponse("user has been added")
+        return redirect("/message/ok/user_has_been_added/login/" )
     except Exception as e:
-        massage = str(e)
-        return HttpResponse(str(e))
+        message = str(e)
+        message = message.replace(" ","_")
+        return redirect("/message/error/%s/register/" % message)
         
 
 def add_job(request):
@@ -150,7 +162,6 @@ def add_job(request):
             "location" in request.POST and\
             "salary" in request.POST and\
             "requirements" in request.POST:
-            print(request.POST["requirements"])
             job_title = request.POST["job_title"]
             company = request.POST["company"]
             location = request.POST["location"]
@@ -159,5 +170,13 @@ def add_job(request):
             new_job = job_item(job_title=job_title,company=company,location=location,salary=salary,requirement=requirement,describe="hash_"+str(hash(request)))
             new_job.save()
         else:
-            raise Exception("please fiil up or args")
-        return redirect(reverse("dashboard"))
+            return redirect("/message/error/please_fiil_up_all_args/dashboard/")
+            # raise Exception("please fiil up or args")
+        return redirect("/message/ok/job_has_added/dashboard/")
+
+def message_page(request,title,message,redirect_url):
+    context          = {}
+    context['title'] = title
+    context['message'] = message.replace("_"," ")
+    context['redirect_url'] = redirect_url
+    return render(request, 'message.html', context)

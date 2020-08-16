@@ -11,145 +11,42 @@
       onclick="window.location.href='/recruiter_page'">I am recruiter</button>
     </header>
     
+
+
     <!-- Team Section -->
 <div class="w3-container" style="padding:70px 16px" id="joblist">
     <h3 class="w3-center">Job List</h3>
     <p class="w3-center w3-large">Find your Job {{views_dict.name}}</p>
     <div class="w3-row-padding w3-grayscale" style="margin-top:64px">
-      <div class="w3-col l3 m6 w3-margin-bottom">
-        <div class="w3-card">
-          <!-- <img src="/w3images/team2.jpg" alt="John" style="width:100%"> -->
-          <div class="w3-container">
-            <h3>Java coder</h3>
-            <p class="w3-opacity"><i class="fa fa-building-o"></i>  Tencent</p>
-            <p>13k~20k</p>
-            <div  class="w3-opacity">
-                <h6><strong>requirements :</strong></h6>
-                <p>1. Human</p>
-                <p>2. Can read, talk</p>
-                <p>3. Can operator the computer</p>
+      {% for job in display_job_list %}
+
+        <div class="w3-col l3 m6 w3-margin-bottom">
+          <div class="w3-card">
+            <!-- <img src="/w3images/team2.jpg" alt="John" style="width:100%"> -->
+            <div class="w3-container">
+
+              <h3>{{ job.job_title }}<a style="padding-bottom: 10px;"></a></h3>
+              <!-- <p class="w3-text-red">{{ job.salary }}</p> -->
+              <h5 class="w3-text-red" style="margin-bottom: 0px;margin-top:5px">
+                <i class="fa fa-jpy w3-opacity fa-1 w3-text-dark-gray" style="font-size:12px"></i>  {{ job.salary }}</h5>
+              <p class="w3-opacity"><i class="fa fa-building-o"></i>  {{ job.company }}</p>
+              <p class="w3-opacity"><i class="fa fa-map-marker"></i>  {{ job.location }}</p>
+              <div  class="w3-opacity">
+                  <h6><strong>requirements :</strong></h6>
+                  <div style="white-space: pre-line; overflow:auto;height: 80px;">{{ job.requirements }}</div>
+              </div>
+              <p><i class="fa fa-fw fa-clock-o"></i>  Posted date: {{ job.data }}</p>
+              <div style="display: none;" id={{job.id}}>{{received_resume}}</div>
+              <p><button class="w3-button w3-light-grey w3-block" onclick=""><i class="fa fa-envelope"></i> send resume</button></p>
             </div>
-            <p><i class="fa fa-fw fa-clock-o"></i>  Posted date: 2020-08-14</p>
-            <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-envelope"></i> send resume</button></p>
           </div>
         </div>
-      </div>
-      <div class="w3-col l3 m6 w3-margin-bottom">
-        <div class="w3-card">
-          <!-- <img src="/w3images/team1.jpg" alt="Jane" style="width:100%"> -->
-          <div class="w3-container">
-            <h3>Java coder</h3>
-            <p class="w3-opacity"><i class="fa fa-building-o"></i>  Tencent</p>
-            <p>13k~20k</p>
-            <div  class="w3-opacity">
-                <h6><strong>requirements :</strong></h6>
-                <p>1. Human</p>
-                <p>2. Can read, talk</p>
-                <p>3. Can operator the computer</p>
-            </div>
-            <p><i class="fa fa-fw fa-clock-o"></i>  Posted date: 2020-08-14</p>
-            <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-envelope"></i> send resume</button></p>
-          </div>
-        </div>
-      </div>
-      <div class="w3-col l3 m6 w3-margin-bottom">
-        <div class="w3-card">
-          <!-- <img src="/w3images/team3.jpg" alt="Mike" style="width:100%"> -->
-          <div class="w3-container">
-            <h3>Java coder</h3>
-            <p class="w3-opacity"><i class="fa fa-building-o"></i>  Tencent</p>
-            <p>13k~20k</p>
-            <div  class="w3-opacity">
-                <h6><strong>requirements :</strong></h6>
-                <p>1. Human</p>
-                <p>2. Can read, talk</p>
-                <p>3. Can operator the computer</p>
-            </div>
-            <p><i class="fa fa-fw fa-clock-o"></i>  Posted date: 2020-08-14</p>
-            <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-envelope"></i> send resume</button></p>
-          </div>
-        </div>
-      </div>
-      <div class="w3-col l3 m6 w3-margin-bottom">
-        <div class="w3-card">
-          <!-- <img src="/w3images/team4.jpg" alt="Dan" style="width:100%"> -->
-          <div class="w3-container">
-            <h3>Java coder</h3>
-            <p class="w3-opacity"><i class="fa fa-building-o"></i>  Tencent</p>
-            <p>13k~20k</p>
-            <div  class="w3-opacity">
-                <h6><strong>requirements :</strong></h6>
-                <p>1. Human</p>
-                <p>2. Can read, talk</p>
-                <p>3. Can operator the computer</p>
-            </div>
-            <p><i class="fa fa-fw fa-clock-o"></i>  Posted date: 2020-08-14</p>
-            <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-envelope"></i> send resume</button></p>
-          </div>
-        </div>
-      </div>
-      <div class="w3-col l3 m6 w3-margin-bottom">
-        <div class="w3-card">
-          <!-- <img src="/w3images/team4.jpg" alt="Dan" style="width:100%"> -->
-         <div class="w3-container">
-            <h3>Java coder</h3>
-            <p class="w3-opacity"><i class="fa fa-building-o"></i>  Tencent</p>
-            <p>13k~20k</p>
-            <div  class="w3-opacity">
-                <h6><strong>requirements :</strong></h6>
-                <p>1. Human</p>
-                <p>2. Can read, talk</p>
-                <p>3. Can operator the computer</p>
-            </div>
-            <p><i class="fa fa-fw fa-clock-o"></i>  Posted date: 2020-08-14</p>
-            <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-envelope"></i> send resume</button></p>
-          </div>
-        </div>
-      </div>
-      <div class="w3-col l3 m6 w3-margin-bottom">
-        <div class="w3-card">
-          <!-- <img src="/w3images/team4.jpg" alt="Dan" style="width:100%"> -->
-          <div class="w3-container">
-            <h3>Java coder</h3>
-            <p class="w3-opacity"><i class="fa fa-building-o"></i>  Tencent</p>
-            <p>13k~20k</p>
-            <div  class="w3-opacity">
-                <h6><strong>requirements :</strong></h6>
-                <p>1. Human</p>
-                <p>2. Can read, talk</p>
-                <p>3. Can operator the computer</p>
-            </div>
-            <p><i class="fa fa-fw fa-clock-o"></i>  Posted date: 2020-08-14</p>
-            <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-envelope"></i> send resume</button></p>
-          </div>
-        </div>
-      </div>
+        {% endfor %}
     </div>
-  </div>
+
+
+</div>
+        
+        
+      
   {% endblock %}
-    
-    <!-- Footer -->
-    <!-- <footer class="w3-container w3-padding-64 w3-center w3-opacity">  
-      <div class="w3-xlarge w3-padding-32">
-        <i class="fa fa-facebook-official w3-hover-opacity"></i>
-        <i class="fa fa-instagram w3-hover-opacity"></i>
-        <i class="fa fa-snapchat w3-hover-opacity"></i>
-        <i class="fa fa-pinterest-p w3-hover-opacity"></i>
-        <i class="fa fa-twitter w3-hover-opacity"></i>
-        <i class="fa fa-linkedin w3-hover-opacity"></i>
-     </div>
-    </footer>
-    
-    <script>
-    function myFunction() {
-      var x = document.getElementById("navDemo");
-      if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-      } else { 
-        x.className = x.className.replace(" w3-show", "");
-      }
-    }
-    </script>
-    
-    </body>
-</html> -->
