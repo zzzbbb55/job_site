@@ -13,6 +13,12 @@
 </style>
 
 <body>
+   <!-- Navbar on small screens -->
+   <div id="navDemo" class=" w3-top w3-bar-block w3-white w3-card w3-theme-d2 w3-hide w3-hide-large w3-hide-medium " style="margin-top: 30px;">
+    <a   class="w3-bar-item w3-button"></a>
+      <a href="/login" id="username_small"   class="w3-bar-item w3-button"><i class="fa fa-user"></i> Login</a>
+      <a href="/user_logout" id="logout_small" style="display: none;" class="w3-bar-item w3-button"><i class="fa fa-sign-out w3-text-red"></i> logout</a>
+    </div>
 
     <!-- Navbar (sit on top) -->
   <div class="w3-top">
@@ -35,26 +41,15 @@
     </div>
   </div>
    
-     <!-- Navbar on small screens -->
-  <div id="navDemo" class="w3-bar-block w3-white w3-theme-d2 w3-hide w3-hide-large w3-hide-medium ">
-  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-opacity w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
-    <i class="fa fa-remove"></i>
-  </a>
-  <a class="w3-bar-item w3-wide">Job Site</a>
-    <a href="/login" id="username_small"   class="w3-bar-item w3-button"><i class="fa fa-user"></i> Login</a>
-    <a href="/user_logout" id="logout_small" style="display: none;" class="w3-bar-item w3-button"><i class="fa fa-sign-out w3-text-red"></i> logout</a>
-  </div>
+  
 
 {% block content %}{% endblock %}
 <!-- Footer -->
 <footer class="w3-container w3-padding-64 w3-center w3-opacity">  
     <div class="w3-xlarge w3-padding-32">
-      <i class="fa fa-facebook-official w3-hover-opacity"></i>
-      <i class="fa fa-instagram w3-hover-opacity"></i>
-      <i class="fa fa-snapchat w3-hover-opacity"></i>
-      <i class="fa fa-pinterest-p w3-hover-opacity"></i>
-      <i class="fa fa-twitter w3-hover-opacity"></i>
-      <i class="fa fa-linkedin w3-hover-opacity"></i>
+      <!-- <i class="fa fa-chrome w3-hover-opacity"></i> -->
+     <a href="https://github.com/zzzbbb55/job_site" target="blank" title="check the code on github"> <i class="fa fa-github w3-hover-opacity"></i></a>
+      <!-- <i class="fa fa-google w3-hover-opacity"></i> -->
    </div>
    <!-- <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p> -->
   </footer>
@@ -128,6 +123,7 @@ function openNav() {
   } else { 
     x.className = x.className.replace(" w3-show", "");
   }
+  // window.location.href="#"
 }
 function w3_close() {
   var x = document.getElementById("navDemo");

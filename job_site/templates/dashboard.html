@@ -172,13 +172,13 @@
         <h2>Post a New Job</h2>
       </header>
       <div class="w3-container">
-        <form action="/user_login/" method="post" id="new_job_form">
+        <form action="/add_job/" method="post" id="new_job_form">
   
           <p class="w3-left"><label><i class="fa fa-user"></i> Job Title</label></p>
           <input class="w3-input w3-border" type="text" name="job_title"  placeholder="Java programer" required>
 
           <p class="w3-left"><label><i class="fa fa-user"></i> Company:</label></p>
-          <input class="w3-input w3-border" type="text" name="company" value="{{username}}" placeholder="" required disabled>
+          <input class="w3-input w3-border" type="text" name="company" value="{{username}}" placeholder="" required>
 
           <p class="w3-left"><label><i class="fa fa-user"></i> Location:</label></p>
           <input class="w3-input w3-border" type="text" name="location" value="{{company_info}}" placeholder="eg: London" required>

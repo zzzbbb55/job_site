@@ -12,3 +12,12 @@ class recruiter(models.Model):
     info = models.CharField(max_length=500,default="")
     describe = models.CharField(max_length=500)
     user_type = models.CharField(max_length=100)
+
+class job_item(models.Model):
+    job_title = models.CharField(max_length=30)
+    company = models.CharField(max_length=100)
+    location = models.CharField(max_length=100)
+    describe = models.CharField(max_length=100,default="")
+    salary = models.CharField(max_length=100)
+    requirement = models.CharField(max_length=500)
+    received_resume = models.CharField(max_length=1000,default="")

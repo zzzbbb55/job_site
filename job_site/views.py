@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from JobModel.models import User, recruiter
+from JobModel.models import User, job_item, recruiter
 
 def hello(request):
     context          = {}
@@ -25,7 +25,7 @@ def index(request):
     context =  get_user_name_and_type(request)
     # if context["user_type"] == "recruiter":
     #     return redirect(reverse("recruiter_page"))
-    
+    print(hash(request))
     return render(request, 'index.html', context)
 
 def my_resume(request):
@@ -74,22 +74,17 @@ def user_login(request):
                     raise Exception('error: empty password')
             else:
                  raise Exception('error: empty user name')
-            print(username)
-            print(password)
             query_user = User.objects.filter(username=username)
             query_company = recruiter.objects.filter(company_name=username)
             if len(query_user) >= 1:
                 user_type = "candidate"
                 query_list = query_user
-                print("candidate")
             elif len(query_company) >= 1:
                 user_type = "recruiter"
                 query_list = query_company
-                print("recruiter")
             else:
                 raise Exception("error: user not existed, please register.")  
             if query_list[0].password == password:
-                print("login")
                 request.session['user'] = {}
                 request.session['user']["name"] = username
                 request.session['user']["user_type"] = user_type
@@ -148,6 +143,21 @@ def user_register(request):
         return HttpResponse(str(e))
         
 
-
-    
-    
+def add_job(request):
+    if request.POST:
+        if "job_title" in request.POST and\
+            "company" in request.POST and\
+            "location" in request.POST and\
+            "salary" in request.POST and\
+            "requirements" in request.POST:
+            print(request.POST["requirements"])
+            job_title = request.POST["job_title"]
+            company = request.POST["company"]
+            location = request.POST["location"]
+            salary = request.POST["salary"]
+            requirement = request.POST["requirements"]
+            new_job = job_item(job_title=job_title,company=company,location=location,salary=salary,requirement=requirement,describe="hash_"+str(hash(request)))
+            new_job.save()
+        else:
+            raise Exception("please fiil up or args")
+        return redirect(reverse("dashboard"))
