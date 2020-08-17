@@ -21,4 +21,5 @@ class job_item(models.Model):
     salary = models.CharField(max_length=100)
     requirement = models.CharField(max_length=500)
     received_resume = models.CharField(max_length=1000,default="")
+    interview_resume = models.CharField(max_length=1000, default="")
     posted_date=models.DateTimeField(auto_now_add=True)
