@@ -255,7 +255,7 @@
   <div id="upload_file" style="display:none" class="w3-modal">
     <div class="w3-modal-content w3-animate-zoom w3-card-4">
       <header class="w3-container w3-teal">
-        <span onclick="document.getElementById('sent_record').style.display='none'"
+        <span onclick="document.getElementById('upload_file').style.display='none'"
         class="w3-button w3-display-topright">&times;</span>
         <h2>Upload a new Resume</h2>
 
@@ -264,7 +264,7 @@
           <form enctype="multipart/form-data" action="/upload_file/" method="post">
              <input class="w3-button " type="file" name="myfile" />
              <br/>
-             <input class="w3-button " type="submit" value="upload"/>
+             <input class="w3-button w3-block w3-dark-grey" type="submit" value="upload"/>
           </form>
       </div>
     </div>
