@@ -28,5 +28,8 @@ urlpatterns = [
     re_path(r'^user_logout/$', views.user_logout, name='user_logout'),
     re_path(r'^user_register/$', views.user_register, name='user_register'),
     re_path(r'^send_resume/$', views.send_resume, name='send_resume'),
+    re_path(r'^add_job/$', views.add_job, name='add_job'),
+    re_path(r'^send_invite/$', views.send_invite, name='send_invite'),
+    re_path(r'^upload_file/$', views.upload_file, name='upload_file'),
     path('message/<title>/<message>/<redirect_url>/', views.message_page, name='message_page'),
 ]

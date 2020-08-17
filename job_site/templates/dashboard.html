@@ -27,7 +27,7 @@
       </tr>
         <tr>
           <td>Resume</td>
-          <td><i class="fa fa-download-cyan"></i> {{resume_url}}</td>
+          <td> <a class="w3-text-blue" href="/static/files/{{resume_url}}" download><i class="fa fa-download-cyan"></i> {{resume_url}}</a></td>
         </tr>  
     </table>
   </div>
@@ -116,30 +116,30 @@
         </header>
         <div class="w3-row-padding w3-margin-bottom">
           <div class="w3-quarter">
-            <div class="w3-container w3-indigo w3-padding-16 w3-hover-opacity" onclick='window.location.href="/index#joblist"'>
+            <div class="w3-container w3-indigo w3-padding-16 w3-hover-opacity" onclick="document.getElementById('interview').style.display='block'">
               <div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
               <div class="w3-right">
-                <!-- <h3>52</h3> -->
+                 <h3>{{len_interview_list}}</h3>
               </div>
               <div class="w3-clear"></div>
-              <h4>Find Job</h4>
+              <h4>Interview Invitation</h4>
             </div>
           </div>
           <div class="w3-quarter">
-            <div class="w3-container w3-blue w3-padding-16 w3-hover-opacity" onclick='window.location.href="/index/"'>
+            <div class="w3-container w3-blue w3-padding-16 w3-hover-opacity" onclick="document.getElementById('sent_record').style.display='block'">
               <div class="w3-left"><i class="fa fa-history w3-xxxlarge"></i></div>
               <div class="w3-right">
-                <!-- <h3>99</h3> -->
+                 <h3>{{len_sent_record}}</h3>
               </div>
               <div class="w3-clear"></div>
               <h4>Send Resume Record</h4>
             </div>
           </div>
           <div class="w3-quarter">
-            <div class="w3-container w3-teal w3-padding-16 w3-hover-opacity">
+            <div class="w3-container w3-teal w3-padding-16 w3-hover-opacity" onclick="document.getElementById('upload_file').style.display='block'">
               <div class="w3-left"><i class="fa fa-upload w3-xxxlarge"></i></div>
               <div class="w3-right">
-                <!-- <h3>23</h3> -->
+                 <h3>+</h3>
               </div>
               <div class="w3-clear"></div>
               <h4>Upload Resume</h4>
@@ -201,6 +201,77 @@
       </footer> -->
     </div>
   </div>
+
+
+  <div id="interview" style="display:none" class="w3-modal">
+    <div class="w3-modal-content w3-animate-zoom w3-card-4">
+      <header class="w3-container w3-teal">
+        <span onclick="document.getElementById('interview').style.display='none'"
+        class="w3-button w3-display-topright">&times;</span>
+        <h2>Your Interview Invitation</h2>
+
+      </header>
+      <div class="w3-padding-large">
+        <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+
+          {% for each_interview in interview_list%}
+          <tr>
+          <td><i class="fa fa-building w3-text-blue"></i> {{each_interview.company}}</td>
+          <td>Ask you an Interview for: </td>
+          <td>{{each_interview.job_title}}</td>
+            </tr>
+          {%endfor%}
+
+
+      </table>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="sent_record" style="display:none" class="w3-modal">
+    <div class="w3-modal-content w3-animate-zoom w3-card-4">
+      <header class="w3-container w3-teal">
+        <span onclick="document.getElementById('sent_record').style.display='none'"
+        class="w3-button w3-display-topright">&times;</span>
+        <h2>Your Send Record</h2>
+
+      </header>
+      <div class="w3-padding-large">
+        <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+
+          {% for each_interview in sent_record%}
+          <tr>
+            <td>You sent: </td>
+          <td><i class="fa fa-building w3-text-blue"></i> {{each_interview.company}}</td>
+          <td>{{each_interview.job_title}}</td>
+            </tr>
+          {%endfor%}
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="upload_file" style="display:none" class="w3-modal">
+    <div class="w3-modal-content w3-animate-zoom w3-card-4">
+      <header class="w3-container w3-teal">
+        <span onclick="document.getElementById('sent_record').style.display='none'"
+        class="w3-button w3-display-topright">&times;</span>
+        <h2>Upload a new Resume</h2>
+
+      </header>
+      <div class="w3-padding-large">
+          <form enctype="multipart/form-data" action="/upload_file/" method="post">
+             <input class="w3-button " type="file" name="myfile" />
+             <br/>
+             <input class="w3-button " type="submit" value="upload"/>
+          </form>
+      </div>
+    </div>
+  </div>
+
+
+
 
 </div>
 

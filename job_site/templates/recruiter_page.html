@@ -43,13 +43,28 @@
       <table  class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
         {% for received_resume in received_resume_list %}
         <tr>
+          {%if received_resume.user in received_resume.interview_resume %}
+          <td><i class="fa fa-check w3-text-green w3-large"></i></td>
+          {%else%}
           <td><i class="fa fa-bell w3-text-red w3-large"></i></td>
+          {%endif%}
           <td>
             <p>From : <i class="fa fa-users w3-text-blue w3-large"></i> {{received_resume.user}} </p>
             <p>for : {{received_resume.job}}</p>
             </td>
-          <td><button class="w3-button w3-teal " style="width: 160px;"><i class="fa fa-download"></i> Download</button>
-            <button class="w3-button w3-green " style="width: 160px;">Invite Interview</button></td>
+            <td><a href="/static/files/{{received_resume.user_resume}}" download><button class="w3-button w3-teal " style="width: 190px;"><i class="fa fa-download"></i> Download Resume</button></a>
+            {%if received_resume.user  in received_resume.interview_resume %}
+            <p><button class="w3-button w3-green " style="width: 190px;" disabled>Invited</button></p></td>
+            {%else%}
+          <form action="/send_invite/" method="post">
+
+                <input style="display:none" type="text" name="job_id" value="{{received_resume.job_id}}"  placeholder="" >
+                <input style="display:none" type="text" name="username" value="{{received_resume.user}}"  placeholder="" >
+                <p><input  type="submit" class="w3-button w3-green "  style="width: 190px;" value="Invite Interview" ></i></input></p>
+
+              </form>
+
+            {%endif%}
           <!-- <td><button class="w3-button w3-green "><i class="fa fa-download"></i> Invite Interview</button></td> -->
         </tr>
   
@@ -89,8 +104,8 @@
               
               <form action="/delete_job/" method="post">
 
-                <input style="display:none" type="text" name="job_id" value="{{job.id}}" id="" placeholder="" >
-                <input style="display:none" type="text" name="username" value="{{username}}" id="" placeholder="" >
+                <input style="display:none" type="text" name="job_id" value="{{job.id}}"  placeholder="" >
+                <input style="display:none" type="text" name="username" value="{{username}}" placeholder="" >
                 <p><input  type="submit" class="w3-button w3-light-grey w3-block"  value="Delete Job" ></i></input></p>
         
               </form>
@@ -114,7 +129,7 @@
   onclick="window.location.href='/index'">I am candidate</button>
 </header>
 
-<div class="w3-container w3-padding-64" style="padding:28px 1px" id="received">
+<div class="w3-container w3-padding-64" style="padding:28px 1px" id="received2">
   <h3 class="w3-center">Get a Company account</h3>
     <p class="w3-center w3-large">go register</p>
 </div>
