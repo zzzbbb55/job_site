@@ -27,5 +27,6 @@ urlpatterns = [
     re_path(r'^user_login/$', views.user_login, name='user_login'),
     re_path(r'^user_logout/$', views.user_logout, name='user_logout'),
     re_path(r'^user_register/$', views.user_register, name='user_register'),
+    re_path(r'^send_resume/$', views.send_resume, name='send_resume'),
     path('message/<title>/<message>/<redirect_url>/', views.message_page, name='message_page'),
 ]

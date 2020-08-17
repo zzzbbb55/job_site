@@ -43,8 +43,24 @@ def my_resume(request):
 
 def recruiter_page(request):
     context =  get_user_name_and_type(request)
-    # if context["user_type"] == "candidate":
-    #     return redirect(reverse("index"))
+    job_list = job_item.objects.filter(company=context["username"]).order_by("posted_date").reverse()
+    display_job_list = list()
+    received_resume_list = list()
+    for each_job in job_list:
+        if each_job.received_resume != "":
+            sent_user_list = each_job.received_resume.split("/")
+            for each_user in sent_user_list:
+                if each_user != "" and each_user != " " : received_resume_list.append({"user":each_user,"job":each_job.job_title,"job_id":each_job.id})
+        display_job_list.append({"id":each_job.id,
+                                 "job_title": each_job.job_title,
+                                 "company":each_job.company,
+                                 "location":each_job.location,
+                                 "salary":each_job.salary,
+                                 "requirements":each_job.requirement,
+                                 "received_resume":each_job.received_resume,
+                                 "data":each_job.posted_date.strftime("%Y-%m-%d")})
+    context["display_job_list"] = display_job_list
+    context["received_resume_list"] = received_resume_list
     return render(request, 'recruiter_page.html', context)
 
 def dashboard(request):
@@ -124,11 +140,13 @@ def user_register(request):
     try:
         massage = "pass"
         print (request.POST["people_type"])
+        if "/" in request.POST["username"]:
+            raise Exception("error : illegal character '/' ")
         if request.POST["people_type"] == "candidate":
             username = request.POST["username"]
             if request.POST["password"] == request.POST["password_confirm"]:
                 password = request.POST["password"]
-                if len(User.objects.filter(username=username)) == 0:
+                if len(User.objects.filter(username=username)) == 0 and len(recruiter.objects.filter(company_name=username)) == 0:
                     new_user = User(username=username,password=password,resume_url="")
                     new_user.save()
                 else:
@@ -137,11 +155,12 @@ def user_register(request):
                 raise ( "error : password is not same as password_confirm")
         else:
             company_name = request.POST["username"]
+            
             company_location = request.POST["company_location"]
             company_description = request.POST["company_description"]
             if request.POST["password"] == request.POST["password_confirm"]:
                 password = request.POST["password"]
-                if len(recruiter.objects.filter(company_name=company_name)) == 0:
+                if len(recruiter.objects.filter(company_name=company_name)) == 0 and len(User.objects.filter(username=company_name)) == 0:
                     new_company = recruiter(company_name=company_name,password=password,info=company_location,describe=company_description,user_type="recruiter")
                     new_company.save()
                 else:
@@ -173,6 +192,19 @@ def add_job(request):
             return redirect("/message/error/please_fiil_up_all_args/dashboard/")
             # raise Exception("please fiil up or args")
         return redirect("/message/ok/job_has_added/dashboard/")
+
+def send_resume(request):
+    if request.POST["username"] == "logout":
+            return redirect(reverse("login_page"))
+    if request.POST:
+        
+        job_id = request.POST["job_id"]
+        username = request.POST["username"]
+        job = job_item.objects.get(id=job_id)
+        now_data = job.received_resume
+        job.received_resume = now_data + '/' + username
+        job.save()
+        return redirect("/index/#jobcard%s" % job_id)
 
 def message_page(request,title,message,redirect_url):
     context          = {}

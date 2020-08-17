@@ -20,7 +20,7 @@
     <div class="w3-row-padding w3-grayscale" style="margin-top:64px">
       {% for job in display_job_list %}
 
-        <div class="w3-col l3 m6 w3-margin-bottom">
+        <div class="w3-col l3 m6 w3-margin-bottom" id="jobcard{{job.id}}">
           <div class="w3-card">
             <!-- <img src="/w3images/team2.jpg" alt="John" style="width:100%"> -->
             <div class="w3-container">
@@ -36,8 +36,24 @@
                   <div style="white-space: pre-line; overflow:auto;height: 80px;">{{ job.requirements }}</div>
               </div>
               <p><i class="fa fa-fw fa-clock-o"></i>  Posted date: {{ job.data }}</p>
-              <div style="display: none;" id={{job.id}}>{{received_resume}}</div>
-              <p><button class="w3-button w3-light-grey w3-block" onclick=""><i class="fa fa-envelope"></i> send resume</button></p>
+              <div style="display: none;" id={{job.id}}>{{job.received_resume}}</div>
+              
+              {%if username in job.received_resume %}
+              <p><button class="w3-button  w3-block w3-green w3-opacity"><i class="fa fa-check w3-text-black"></i> Sent</button></p>
+
+              {%elif user_type == "recruiter" %}
+              <p><button class="w3-button w3-light-grey w3-block" disabled onclick="console.log( '{{job.id}}')">You are Recruiter</button></p>
+              {% else %}
+              <form action="/send_resume/" method="post">
+
+                <input style="display:none" type="text" name="job_id" value="{{job.id}}" id="" placeholder="" >
+                <input style="display:none" type="text" name="username" value="{{username}}" id="" placeholder="" >
+                <p><input  type="submit" class="w3-button w3-light-grey w3-block"  value="Send Resume" ></i></input></p>
+        
+              </form>
+              {% endif %}
+              
+            
             </div>
           </div>
         </div>
@@ -50,3 +66,10 @@
         
       
   {% endblock %}
+
+  <!-- {% block script_func %}
+  
+  function send_resume(id) {
+
+  }
+  {% endblock %} -->

@@ -20,10 +20,10 @@
 
     {% block content %}
 
-    
+    {%if user_type == "recruiter" %}
     
     <!-- Header -->
-    <header class="w3-container w3-grey w3-center" style="padding:128px 16px">
+    <header class="w3-container w3-grey w3-center" style="padding:28px 16px">
       <h1 class="w3-margin w3-jumbo">Find Candidate!</h1>
       <!-- <p class="w3-xlarge">Template by w3.css</p> -->
       <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top"
@@ -31,148 +31,92 @@
     </header>
 
  <!-- resume list Section -->
- <div class="w3-container w3-padding-64" style="padding:28px 16px" id="received">
+ <div class="w3-container w3-padding-64" style="padding:28px 1px" id="received">
   <h3 class="w3-center">Received Resume</h3>
     <p class="w3-center w3-large">Please check</p>
-    <div class="w3-row-padding w3-grayscale w3-center w3-padding-64" style="padding-left:5%;padding-right:5%;">
-    <table class="w3-table w3-striped w3-white">
-      <tr>
-        <td><i class="fa fa-bell w3-text-red w3-large"></i></td>
-        <td>Resume From 
-          <p><i class="fa fa-users w3-text-blue w3-large"></i> zzb@qq.com</p>
-          </td>
-        <td><button class="w3-button w3-teal " style="width: 160px;"><i class="fa fa-download"></i> Download</button>
-          <button class="w3-button w3-green " style="width: 160px;">Invite Interview</button></td>
-        <!-- <td><button class="w3-button w3-green "><i class="fa fa-download"></i> Invite Interview</button></td> -->
-      </tr>
-      <tr>
-        <td><i class="fa fa-bell w3-text-red w3-large"></i></td>
-        <td>Resume From 
-          <p><i class="fa fa-users w3-text-blue w3-large"></i> zzb2@qq.com</p>
-          </td>
+    {%if not received_resume_list %}
+      <p class="w3-center w3-opacity"><i class="fa fa-info-circle w3-text-orange"></i> You have Never recevied a resume</p>
+    
+      
+      {%else%}
+      <div class="w3-row-padding w3-grayscale w3-center w3-padding-64" style="padding-left:5%;padding-right:5%;">
+      <table  class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+        {% for received_resume in received_resume_list %}
+        <tr>
+          <td><i class="fa fa-bell w3-text-red w3-large"></i></td>
+          <td>
+            <p>From : <i class="fa fa-users w3-text-blue w3-large"></i> {{received_resume.user}} </p>
+            <p>for : {{received_resume.job}}</p>
+            </td>
           <td><button class="w3-button w3-teal " style="width: 160px;"><i class="fa fa-download"></i> Download</button>
             <button class="w3-button w3-green " style="width: 160px;">Invite Interview</button></td>
-        <!-- <td><button class="w3-button w3-green "><i class="fa fa-download"></i> Invite Interview</button></td> -->
-      </tr>
-      <tr>
-        <td><i class="fa fa-bell w3-text-red w3-large"></i></td>
-        <td>Resume From 
-          <p><i class="fa fa-users w3-text-blue w3-large"></i> zzb3@qq.com</p>
-          </td>
-          <td><button class="w3-button w3-teal " style="width: 160px;"><i class="fa fa-download"></i> Download</button>
-            <button class="w3-button w3-green " style="width: 160px;">Invite Interview</button></td>
-        <!-- <td><button class="w3-button w3-green "><i class="fa fa-download"></i> Invite Interview</button></td> -->
-      </tr>
-      <tr>
-        <td><i class="fa fa-bell w3-text-red w3-large"></i></td>
-        <td>Resume From 
-          <p><i class="fa fa-users w3-text-blue w3-large"></i> zzb4@qq.com</p>
-          </td>
-          <td><button class="w3-button w3-teal " style="width: 160px;"><i class="fa fa-download"></i> Download</button>
-            <button class="w3-button w3-green " style="width: 160px;">Invite Interview</button></td>
-        <!-- <td><button class="w3-button w3-green "><i class="fa fa-download"></i> Invite Interview</button></td> -->
-      </tr>
-    </table></div>
+          <!-- <td><button class="w3-button w3-green "><i class="fa fa-download"></i> Invite Interview</button></td> -->
+        </tr>
+  
+        {% endfor %}
+      </table>
+
+     
+    </div>
+    {%endif%}
   </div>
+
     <hr>
     <!-- Team Section -->
 <div class="w3-container" style="padding:28px 16px" id="joblist">
     <h3 class="w3-center">Job List</h3>
     <p class="w3-center w3-large">Your Posted Jobs</p>
     <div class="w3-row-padding w3-grayscale" style="margin-top:64px">
-      <div class="w3-col l3 m6 w3-margin-bottom">
-        <div class="w3-card">
-          <!-- <img src="/w3images/team2.jpg" alt="John" style="width:100%"> -->
-          <div class="w3-container">
-            <h3><i class="fa fa-qq"></i>Tencent</h3>
-            <p class="w3-opacity">Java coder</p>
-            <p>13k~20k</p>
-              <p><i class="fa fa-fw fa-clock-o"></i>  Posted date: 2020-08-14</p>
-               <p><button class="w3-button w3-light-grey w3-block">Delete</button></p>
+      {% for job in display_job_list %}
+
+        <div class="w3-col l3 m6 w3-margin-bottom">
+          <div class="w3-card">
+            <!-- <img src="/w3images/team2.jpg" alt="John" style="width:100%"> -->
+            <div class="w3-container">
+
+              <h3>{{ job.job_title }}<a style="padding-bottom: 10px;"></a></h3>
+              <!-- <p class="w3-text-red">{{ job.salary }}</p> -->
+              <h5 class="w3-text-red" style="margin-bottom: 0px;margin-top:5px">
+                <i class="fa fa-jpy w3-opacity fa-1 w3-text-dark-gray" style="font-size:12px"></i>  {{ job.salary }}</h5>
+              <p class="w3-opacity"><i class="fa fa-building-o"></i>  {{ job.company }}</p>
+              <p class="w3-opacity"><i class="fa fa-map-marker"></i>  {{ job.location }}</p>
+              <div  class="w3-opacity">
+                  <h6><strong>requirements :</strong></h6>
+                  <div style="white-space: pre-line; overflow:auto;height: 80px;">{{ job.requirements }}</div>
+              </div>
+              <p><i class="fa fa-fw fa-clock-o"></i>  Posted date: {{ job.data }}</p>
+              <div style="display: none;" id={{job.id}}>{{job.received_resume}}</div>
+              
+              <form action="/delete_job/" method="post">
+
+                <input style="display:none" type="text" name="job_id" value="{{job.id}}" id="" placeholder="" >
+                <input style="display:none" type="text" name="username" value="{{username}}" id="" placeholder="" >
+                <p><input  type="submit" class="w3-button w3-light-grey w3-block"  value="Delete Job" ></i></input></p>
+        
+              </form>
+              
+            
+            </div>
           </div>
         </div>
-      </div>
-      <div class="w3-col l3 m6 w3-margin-bottom">
-        <div class="w3-card">
-          <!-- <img src="/w3images/team1.jpg" alt="Jane" style="width:100%"> -->
-          <div class="w3-container">
-            <h3><i class="fa fa-qq"></i>Tencent</h3>
-            <p class="w3-opacity">Java coder</p>
-            <p>13k~20k</p>
-              <p><i class="fa fa-fw fa-clock-o"></i>  Posted date: 2020-08-14</p>
-               <p><button class="w3-button w3-light-grey w3-block">Delete</button></p>          </div>
-        </div>
-      </div>
-      <div class="w3-col l3 m6 w3-margin-bottom">
-        <div class="w3-card">
-          <!-- <img src="/w3images/team3.jpg" alt="Mike" style="width:100%"> -->
-          <div class="w3-container">
-            <h3><i class="fa fa-qq"></i>Tencent</h3>
-            <p class="w3-opacity">Java coder</p>
-            <p>13k~20k</p>
-                <p><i class="fa fa-fw fa-clock-o"></i>  Posted date: 2020-08-14</p>
-               <p><button class="w3-button w3-light-grey w3-block">Delete</button></p>          </div>
-        </div>
-      </div>
-      <div class="w3-col l3 m6 w3-margin-bottom">
-        <div class="w3-card">
-          <!-- <img src="/w3images/team4.jpg" alt="Dan" style="width:100%"> -->
-          <div class="w3-container">
-            <h3><i class="fa fa-qq"></i>Tencent</h3>
-            <p class="w3-opacity">Java coder</p>
-            <p>13k~20k</p>
-              <p><i class="fa fa-fw fa-clock-o"></i>  Posted date: 2020-08-14</p>
-               <p><button class="w3-button w3-light-grey w3-block">Delete</button></p>          </div>
-        </div>
-      </div>
-      <div class="w3-col l3 m6 w3-margin-bottom">
-        <div class="w3-card">
-          <!-- <img src="/w3images/team4.jpg" alt="Dan" style="width:100%"> -->
-          <div class="w3-container">
-            <h3><i class="fa fa-qq"></i>Tencent</h3>
-            <p class="w3-opacity">Java coder</p>
-            <p>13k~20k</p>
-                <p><i class="fa fa-fw fa-clock-o"></i>  Posted date: 2020-08-14</p>
-               <p><button class="w3-button w3-light-grey w3-block">Delete</button></p>          </div>
-        </div>
-      </div>
-      <div class="w3-col l3 m6 w3-margin-bottom">
-        <div class="w3-card">
-          <!-- <img src="/w3images/team4.jpg" alt="Dan" style="width:100%"> -->
-          <div class="w3-container">
-            <h3><i class="fa fa-qq"></i>Tencent</h3>
-            <p class="w3-opacity">Java coder</p>
-            <p>13k~20k</p>
-              <p><i class="fa fa-fw fa-clock-o"></i>  Posted date: 2020-08-14</p>
-               <p><button class="w3-button w3-light-grey w3-block">Delete</button></p>          </div>
-        </div>
-      </div>
-    </div>
+        {% endfor %}
+              
+              
+              
   </div>
+</div>
+
+{%else%}
+<header class="w3-container w3-grey w3-center" style="padding:28px 16px">
+  <h1 class="w3-margin w3-jumbo">No You are Not!</h1>
+  <!-- <p class="w3-xlarge">Template by w3.css</p> -->
+  <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top"
+  onclick="window.location.href='/index'">I am candidate</button>
+</header>
+
+<div class="w3-container w3-padding-64" style="padding:28px 1px" id="received">
+  <h3 class="w3-center">Get a Company account</h3>
+    <p class="w3-center w3-large">go register</p>
+</div>
+{%endif%}
   {% endblock %}
-    
-    <!-- Footer -->
-    <!-- <footer class="w3-container w3-padding-64 w3-center w3-opacity">  
-      <div class="w3-xlarge w3-padding-32">
-        <i class="fa fa-facebook-official w3-hover-opacity"></i>
-        <i class="fa fa-instagram w3-hover-opacity"></i>
-        <i class="fa fa-snapchat w3-hover-opacity"></i>
-        <i class="fa fa-pinterest-p w3-hover-opacity"></i>
-        <i class="fa fa-twitter w3-hover-opacity"></i>
-        <i class="fa fa-linkedin w3-hover-opacity"></i>
-     </div>
-    </footer>
-    
-    <script>
-    function myFunction() {
-      var x = document.getElementById("navDemo");
-      if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-      } else { 
-        x.className = x.className.replace(" w3-show", "");
-      }
-    }
-    </script>
-    
-    </body>
-</html> -->
