@@ -21,11 +21,11 @@
       {% for job in display_job_list %}
 
         <div class="w3-col l3 m6 w3-margin-bottom" id="jobcard{{job.id}}">
-          <div class="w3-card">
+          <div class="w3-card" style="height:400px;overflow:auto">
             <!-- <img src="/w3images/team2.jpg" alt="John" style="width:100%"> -->
             <div class="w3-container">
 
-              <h3>{{ job.job_title }}<a style="padding-bottom: 10px;"></a></h3>
+              <h3>{{ job.job_title }}<a style="padding-bottom: 10px; "></a></h3>
               <!-- <p class="w3-text-red">{{ job.salary }}</p> -->
               <h5 class="w3-text-red" style="margin-bottom: 0px;margin-top:5px">
                 <i class="fa fa-jpy w3-opacity fa-1 w3-text-dark-gray" style="font-size:12px"></i>  {{ job.salary }}</h5>
@@ -46,8 +46,8 @@
               {% else %}
               <form action="/send_resume/" method="post">
 
-                <input style="display:none" type="text" name="job_id" value="{{job.id}}" id="" placeholder="" >
-                <input style="display:none" type="text" name="username" value="{{username}}" id="" placeholder="" >
+                <input style="display:none" type="text" name="job_id" value="{{job.id}}" placeholder="" >
+                <input style="display:none" type="text" name="username" value="{{username}}" placeholder="" >
                 <p><input  type="submit" class="w3-button w3-light-grey w3-block"  value="Send Resume" ></i></input></p>
         
               </form>
