@@ -16,7 +16,21 @@
     <!-- Team Section -->
 <div class="w3-container" style="padding:70px 16px" id="joblist">
     <h3 class="w3-center">Job List</h3>
-    <p class="w3-center w3-large">Find your Job {{views_dict.name}}</p>
+    <p class="w3-center w3-large">
+        <div style="padding-left:20%;padding-right:20%">
+         <div  style="position: relative;">
+          <input  class="w3-input w3-center" type="text"
+                  placeholder="Search Jobs! eg: London, Apple"
+                  style="width: 100%;padding-right: 50px;"
+                  name="search_str" id="search_str" value="{{search_str}}"/>
+          <button class="w3-button"
+                  onclick="search()"
+                  title="Search" style="width: 50px;position: absolute;top: 0;right: 0;" type="submit">
+              <i class="fa fa-search w3-text-blue" style="font-size:25px"></i></button>
+        </div>
+        </div>
+
+    </p>
     <div class="w3-row-padding w3-grayscale" style="margin-top:64px">
       {% for job in display_job_list %}
 
@@ -25,15 +39,15 @@
             <!-- <img src="/w3images/team2.jpg" alt="John" style="width:100%"> -->
             <div class="w3-container">
 
-              <h3>{{ job.job_title }}<a style="padding-bottom: 10px; "></a></h3>
+              <h3 id="jobcard{{job.id}}_title">{{ job.job_title }}<a style="padding-bottom: 10px; "></a></h3>
               <!-- <p class="w3-text-red">{{ job.salary }}</p> -->
-              <h5 class="w3-text-red" style="margin-bottom: 0px;margin-top:5px">
+              <h5 class="w3-text-red" style="margin-bottom: 0px;margin-top:5px" >
                 <i class="fa fa-jpy w3-opacity fa-1 w3-text-dark-gray" style="font-size:12px"></i>  {{ job.salary }}</h5>
-              <p class="w3-opacity"><i class="fa fa-building-o"></i>  {{ job.company }}</p>
-              <p class="w3-opacity"><i class="fa fa-map-marker"></i>  {{ job.location }}</p>
+              <p class="w3-opacity" id="jobcard{{job.id}}_company"><i class="fa fa-building-o"></i>  {{ job.company }}</p>
+              <p class="w3-opacity" id="jobcard{{job.id}}_location"><i class="fa fa-map-marker"></i>  {{ job.location }}</p>
               <div  class="w3-opacity">
                   <h6><strong>requirements :</strong></h6>
-                  <div style="white-space: pre-line; overflow:auto;height: 80px;">{{ job.requirements }}</div>
+                  <div style="white-space: pre-line; overflow:auto;height: 80px;" id="jobcard{{job.id}}_requirement">{{ job.requirements }}</div>
               </div>
               <p><i class="fa fa-fw fa-clock-o"></i>  Posted date: {{ job.data }}</p>
               <div style="display: none;" id={{job.id}}>{{job.received_resume}}</div>
@@ -62,8 +76,28 @@
 
 
 </div>
-        
-        
+
+<script>
+function search() {
+  key_word =  document.getElementById("search_str").value.toLowerCase()
+  for(var i=0; i<=100; i++){
+      var id = i.toString()
+      if (document.getElementById("jobcard"+id+"_title") != null){
+        document.getElementById("jobcard"+id).style.display=""
+        var title = document.getElementById("jobcard"+id+"_title").innerText.toLowerCase();
+        var company = document.getElementById("jobcard"+id+"_company").innerText.toLowerCase();
+        var location = document.getElementById("jobcard"+id+"_location").innerText.toLowerCase();
+        var requirment = document.getElementById("jobcard"+id+"_requirement").innerText.toLowerCase();
+
+        if (title.indexOf(key_word) < 0 &&
+            company.indexOf(key_word) < 0 &&
+            location.indexOf(key_word) < 0  ){
+              document.getElementById("jobcard"+id).style.display="none"
+        }
+      } }
+}
+
+</script>
       
   {% endblock %}
 
