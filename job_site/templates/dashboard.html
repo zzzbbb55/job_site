@@ -178,8 +178,8 @@
           <input class="w3-input w3-border" type="text" name="job_title"  placeholder="Java programer" required>
 
           <p class="w3-left"><label><i class="fa fa-user"></i> Company:</label></p>
-          <input class="w3-input w3-border" type="text" name="company" value="{{username}}" placeholder="" required>
-
+          <input class="w3-input w3-border" type="text"  value="{{username}}" placeholder="" disabled>
+          <input class="w3-input w3-border" type="text" name="company" value="{{username}}" placeholder="" style="display:none" required>
           <p class="w3-left"><label><i class="fa fa-user"></i> Location:</label></p>
           <input class="w3-input w3-border" type="text" name="location" value="{{company_info}}" placeholder="eg: London" required>
 

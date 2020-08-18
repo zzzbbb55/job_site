@@ -226,6 +226,18 @@ def add_job(request):
             # raise Exception("please fiil up or args")
         return redirect("/message/ok/job_has_added/dashboard/")
 
+def delete_job(request):
+    if request.POST:
+        if "job_id" in request.POST :
+            job_id = request.POST["job_id"]
+            new_job = job_item.objects.get(id=job_id)
+            new_job.delete()
+        else:
+            return redirect("/message/error/please_fiil_up_all_args/recruiter_page/")
+            # raise Exception("please fiil up or args")
+        return redirect("/message/ok/job_has_deleted/recruiter_page/")
+
+
 def send_resume(request):
     if request.POST["username"] == "logout":
             return redirect(reverse("login_page"))
