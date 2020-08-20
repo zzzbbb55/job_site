@@ -239,7 +239,8 @@ def delete_job(request):
 
 
 def send_resume(request):
-    if request.POST["username"] == "logout":
+
+    if "username" not in request.POST or request.POST["username"] == "logout":
             return redirect(reverse("login_page"))
     elif User.objects.get(username=request.POST["username"]).resume_url == "":
         return redirect("/message/No_Resume/please_go_to_dashboard_to_upload_your_resume/dashboard/")
