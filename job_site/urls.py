@@ -32,5 +32,6 @@ urlpatterns = [
     re_path(r'^delete_job/$', views.delete_job, name='delete_job'),
     re_path(r'^send_invite/$', views.send_invite, name='send_invite'),
     re_path(r'^upload_file/$', views.upload_file, name='upload_file'),
+    path('job_details/<job_id>/', views.job_details, name='job_details'),
     path('message/<title>/<message>/<redirect_url>/', views.message_page, name='message_page'),
 ]

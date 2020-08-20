@@ -45,6 +45,21 @@ def index(request):
     context["display_job_list"] = display_job_list
     return render(request, 'index.html', context)
 
+def job_details(request,job_id):
+    context = get_user_name_and_type(request)
+    if context["username"] == "logout":
+            return redirect(reverse("login_page"))
+    each_job = job_item.objects.get(id=job_id)
+    context["job"]={"id":each_job.id,
+                 "job_title": each_job.job_title,
+                 "company":each_job.company,
+                 "location":each_job.location,
+                 "salary":each_job.salary,
+                 "requirements":each_job.requirement,
+                 "received_resume":each_job.received_resume,
+                 "data":each_job.posted_date.strftime("%Y-%m-%d")}
+    return render(request, 'job_details_page.html', context)
+
 def my_resume(request):
     return render(request, 'dashboard.html', )
 

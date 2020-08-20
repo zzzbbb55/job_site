@@ -35,12 +35,18 @@
       {% for job in display_job_list %}
 
         <div class="w3-col l3 m6 w3-margin-bottom" id="jobcard{{job.id}}">
-          <div class="w3-card" style="height:400px;overflow:auto">
+
+          <div class="w3-card"
+
+               style="height:400px;overflow:auto">
             <!-- <img src="/w3images/team2.jpg" alt="John" style="width:100%"> -->
             <div class="w3-container">
+                <form class= "w3-right" action="/job_details/{{job.id}}/" method="post">
+                    <button type="submit" class="w3-button"><p class="w3-opacity "><i class="fa fa-arrow-right"></i></p>
+                    </button>
 
+                </form>
               <h3 id="jobcard{{job.id}}_title">{{ job.job_title }}<a style="padding-bottom: 10px; "></a></h3>
-              <!-- <p class="w3-text-red">{{ job.salary }}</p> -->
               <h5 class="w3-text-red" style="margin-bottom: 0px;margin-top:5px" >
                 <i class="fa fa-jpy w3-opacity fa-1 w3-text-dark-gray" style="font-size:12px"></i>  {{ job.salary }}</h5>
               <p class="w3-opacity" id="jobcard{{job.id}}_company"><i class="fa fa-building-o"></i>  {{ job.company }}</p>
