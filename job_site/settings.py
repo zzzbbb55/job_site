@@ -14,7 +14,8 @@ from pathlib import Path
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-
+JS_DIR = os.path.join(BASE_DIR, 'job_site')
+TEMPLATE_DIR = os.path.join(JS_DIR, 'templates')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -53,19 +54,19 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'job_site.urls'
 
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR  / "job_site" / "templates",],  
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
+     {
+         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+         'DIRS': [TEMPLATE_DIR],
+         'APP_DIRS': True,
+         'OPTIONS': {
+             'context_processors': [
+                 'django.template.context_processors.debug',
+                 'django.template.context_processors.request',
+                 'django.contrib.auth.context_processors.auth',
+                 'django.contrib.messages.context_processors.messages',
+             ],
+         },
+     },
 ]
 
 WSGI_APPLICATION = 'job_site.wsgi.application'
@@ -77,7 +78,7 @@ WSGI_APPLICATION = 'job_site.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
