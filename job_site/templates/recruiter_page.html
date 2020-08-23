@@ -49,7 +49,13 @@
           <td><i class="fa fa-bell w3-text-red w3-large"></i></td>
           {%endif%}
           <td>
-            <p>From : <i class="fa fa-users w3-text-blue w3-large"></i> {{received_resume.user}} </p>
+            <p>From : 
+              <form  action="/user_info/" method="GET">
+              <input class="w3-input w3-border" type="text" name="user_info_name" value="{{received_resume.user}}" placeholder="" style="display:none" required>
+              <button  type="submit" class="w3-button w3-border w3-hover-blue-gray"><i class="fa fa-users w3-text-blue w3-large"></i> {{received_resume.user}}
+              </button>
+              </form>
+              </p>
             <p>for : {{received_resume.job}}</p>
             </td>
             <td><a href="/static/files/{{received_resume.user_resume}}" download><button class="w3-button w3-teal " style="width: 190px;"><i class="fa fa-download"></i> Download Resume</button></a>

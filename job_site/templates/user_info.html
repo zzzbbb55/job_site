@@ -1,7 +1,60 @@
+{%extends "base.html" %}
+{% load static %}
 
-{%extends "dashboard.html" %}
 
-{% block canvas_map %}
+{% block content %}
+
+<div class="w3-col l6 m6 w3-margin-bottom" >
+    <button onclick="window.location.href='/recruiter_page/#received'"
+    class="w3-button w3-blue-grey "
+    style="margin-top:60px ;margin-left:10px">
+<i class="fa fa-arrow-left"></i>  Back</button>
+
+ <div class="" style="margin-top:20px ;margin-left:20px">
+    <img src='{% static "images/avatar3.png" %}' class="w3-circle w3-margin-right" style="width:46px">
+  <span> <strong>{{user_info_name}}</strong> </span> <br>
+</div>
+<hr>
+<div id= "candidate_table" class="w3-container" style="width: 80%; ">
+
+<h5>The Information</h5>
+<table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+    <tr>
+        <td>Name</td>
+        <td><i class="fa fa-user w3-text-green"></i> {{user_info_name}}</td>
+    </tr>
+    <tr>
+        <td>type</td>
+        <td><i class="fa fa-group w3-text-blue-gray"></i>  {{user_type}}</td>
+    </tr>
+    <tr>
+        <td>work_experience</td>
+        <td><div style="white-space: pre-line; ">{{my_info.work_experience}}</div></td>
+    </tr>
+    <tr>
+        <td>educational_background</td>
+        <td><div style="white-space: pre-line; ">{{my_info.educational_background}}</div> </td>
+    </tr>
+    <tr>
+        <td>gpa</td>
+        <td> <a class="w3-text-blue" ><i class="fa fa-download-cyan"></i> {{my_info.gpa}}</a></td>
+    </tr>  
+    <tr>
+        <td>expected_salary</td>
+        <td><div style="white-space: pre-line; ">{{my_info.expected_salary}}</div> </td>
+    </tr> 
+    <tr>
+        <td>professional_certificate</td>
+        <td><div style="white-space: pre-line; ">{{my_info.professional_certificate}}</div>
+             </td>
+    </tr>   
+</table>
+</div>
+
+<header class="w3-container" style="padding-top:22px">
+    <h5><b><i class="fa fa-bar-chart-o"></i>  Map</b></h5>
+  </header>
+ 
 
   <div class="w3-center w3-container" id = "cav_map" style="overflow:visible">
     <canvas id = "cav" style="overflow:visible"></canvas>
@@ -199,5 +252,5 @@
           ctx.restore();
       }
   </script>
- {% endblock %}
 
+  {% endblock %}

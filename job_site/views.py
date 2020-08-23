@@ -139,6 +139,20 @@ def account(request):
     
     return render(request, 'account.html',context )
 
+def user_info(request):
+    context =  get_user_name_and_type(request)
+    if 'user_info_name' in request.GET and request.GET['user_info_name']:
+        query_user = User.objects.filter(username=request.GET['user_info_name'])[0]
+        context["user_info_name"] =  request.GET['user_info_name']
+        context["resume_url"] = query_user.resume_url
+        context["my_info"] = {}
+        context["my_info"]["work_experience"] = query_user.work_experience 
+        context["my_info"]["educational_background"] = query_user.educational_background
+        context["my_info"]["gpa"] = query_user.gpa
+        context["my_info"]["expected_salary"] = query_user.expected_salary 
+        context["my_info"]["professional_certificate"] = query_user.professional_certificate  
+        return render(request, 'user_info.html',context )
+
 def login_page(request):
     return render(request, 'login_page.html', )
 
