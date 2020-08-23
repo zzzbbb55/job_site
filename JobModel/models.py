@@ -5,6 +5,11 @@ class User(models.Model):
     username = models.CharField(max_length=30)
     password = models.CharField(max_length=300)
     resume_url = models.CharField(max_length=500)
+    work_experience = models.CharField(max_length=500, default="")
+    educational_background = models.CharField(max_length=500, default="")
+    gpa = models.CharField(max_length=500, default="")
+    expected_salary = models.CharField(max_length=500, default="")
+    professional_certificate =  models.CharField(max_length=500, default="")
 
 class recruiter(models.Model):
     company_name = models.CharField(max_length=30)
@@ -23,3 +28,4 @@ class job_item(models.Model):
     received_resume = models.CharField(max_length=1000,default="")
     interview_resume = models.CharField(max_length=1000, default="")
     posted_date=models.DateTimeField(auto_now_add=True)
+    work_type = models.CharField(max_length=500, default="Others")

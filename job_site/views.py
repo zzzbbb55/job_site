@@ -57,11 +57,15 @@ def job_details(request,job_id):
                  "salary":each_job.salary,
                  "requirements":each_job.requirement,
                  "received_resume":each_job.received_resume,
+                 "work_type":each_job.work_type,
                  "data":each_job.posted_date.strftime("%Y-%m-%d")}
     return render(request, 'job_details_page.html', context)
 
 def my_resume(request):
     return render(request, 'dashboard.html', )
+
+def test(request):
+    return render(request, 'test.html', )
 
 def recruiter_page(request):
     context =  get_user_name_and_type(request)
@@ -95,7 +99,7 @@ def recruiter_page(request):
     context["received_resume_list"] = received_resume_list
     return render(request, 'recruiter_page.html', context)
 
-def dashboard(request):
+def account(request):
     context =  get_user_name_and_type(request)
     username = context["username"]
     usertype = context["user_type"]
@@ -119,6 +123,12 @@ def dashboard(request):
         query_user = User.objects.filter(username=username)[0]
         user_resume_url = query_user.resume_url
         context["resume_url"] = user_resume_url
+        context["my_info"] = {}
+        context["my_info"]["work_experience"] = query_user.work_experience 
+        context["my_info"]["educational_background"] = query_user.educational_background
+        context["my_info"]["gpa"] = query_user.gpa
+        context["my_info"]["expected_salary"] = query_user.expected_salary 
+        context["my_info"]["professional_certificate"] = query_user.professional_certificate  
     elif usertype == "recruiter":
         query_company = recruiter.objects.filter(company_name=username)[0]
         context["company_name"] = query_company.company_name
@@ -127,7 +137,7 @@ def dashboard(request):
     else:
         return redirect(reverse("login_page"))
     
-    return render(request, 'dashboard.html',context )
+    return render(request, 'account.html',context )
 
 def login_page(request):
     return render(request, 'login_page.html', )
@@ -228,18 +238,20 @@ def add_job(request):
             "company" in request.POST and\
             "location" in request.POST and\
             "salary" in request.POST and\
+            "work_type" in request.POST and\
             "requirements" in request.POST:
             job_title = request.POST["job_title"]
             company = request.POST["company"]
             location = request.POST["location"]
             salary = request.POST["salary"]
             requirement = request.POST["requirements"]
-            new_job = job_item(job_title=job_title,company=company,location=location,salary=salary,requirement=requirement,describe="hash_"+str(hash(request)))
+            work_type = request.POST["work_type"]
+            new_job = job_item(job_title=job_title,company=company,location=location,salary=salary,requirement=requirement,work_type=work_type,describe="hash_"+str(hash(request)))
             new_job.save()
         else:
-            return redirect("/message/error/please_fiil_up_all_args/dashboard/")
+            return redirect("/message/error/please_fiil_up_all_args/account/")
             # raise Exception("please fiil up or args")
-        return redirect("/message/ok/job_has_added/dashboard/")
+        return redirect("/message/ok/job_has_added/account/")
 
 def delete_job(request):
     if request.POST:
@@ -258,7 +270,7 @@ def send_resume(request):
     if "username" not in request.POST or request.POST["username"] == "logout":
             return redirect(reverse("login_page"))
     elif User.objects.get(username=request.POST["username"]).resume_url == "":
-        return redirect("/message/No_Resume/please_go_to_dashboard_to_upload_your_resume/dashboard/")
+        return redirect("/message/No_Resume/please_go_to_dashboard_to_upload_your_resume/account/")
     if request.POST:
         
         job_id = request.POST["job_id"]
@@ -271,7 +283,7 @@ def send_resume(request):
 
 
 def send_invite(request):
-    if request.POST["username"] == "logout":
+    if  "username" not in request.POST or request.POST["username"] == "logout":
         return redirect(reverse("login_page"))
 
     if request.POST:
@@ -282,6 +294,27 @@ def send_invite(request):
         job.interview_resume = now_data + '/' + username
         job.save()
         return redirect("/recruiter_page/#received")
+
+def change_info(request):
+    if  "username" not in request.POST or request.POST["username"] == "logout":
+        return redirect(reverse("login_page"))
+
+    if request.POST:
+        username =  request.POST["username"]
+        work_experience = request.POST["work_experience"]
+        educational_background = request.POST["educational_background"]
+        gpa = request.POST["gpa"]
+        expected_salary = request.POST["expected_salary"]
+        professional_certificate =  request.POST["professional_certificate"]
+
+        query_user = User.objects.filter(username=username)[0]
+        query_user.work_experience = work_experience
+        query_user.educational_background = educational_background
+        query_user.gpa = gpa
+        query_user.expected_salary = expected_salary
+        query_user.professional_certificate = professional_certificate
+        query_user.save()
+        return redirect("/message/ok/Infomation_has_edited_!/account/")
 
 def message_page(request,title,message,redirect_url):
     context          = {}
@@ -296,7 +329,7 @@ def upload_file(request):
         raise Exception("No user info")
     myFile = request.FILES.get("myfile", None)
     if not myFile:
-        return redirect("/message/error/No_file_was_Selected!/dashboard/")
+        return redirect("/message/error/No_file_was_Selected!/account/")
     destination = open(os.path.join(BASE_DIR, "statics", "files", myFile.name), 'wb+')
     for chunk in myFile.chunks():
         destination.write(chunk)
@@ -305,4 +338,4 @@ def upload_file(request):
     User1 = User.objects.get(username=user_info["username"])
     User1.resume_url = myFile.name
     User1.save()
-    return redirect("/message/ok/File_has_uploaded_!/dashboard/")
+    return redirect("/message/ok/File_has_uploaded_!/account/")

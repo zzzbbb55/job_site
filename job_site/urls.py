@@ -21,7 +21,7 @@ urlpatterns = [
     re_path(r'^index/$', views.index, name='index'),
     re_path(r'^my_resume/$', views.my_resume, name='resume'),
     re_path(r'^recruiter_page/$', views.recruiter_page, name='recruiter_page'),
-    re_path(r'^dashboard/$', views.dashboard, name='dashboard'),
+    re_path(r'^account/$', views.account, name='account'),
     re_path(r'^login/$', views.login_page, name='login_page'),
     re_path(r'^register/$', views.register_page, name='register_page'),
     re_path(r'^user_login/$', views.user_login, name='user_login'),
@@ -32,6 +32,8 @@ urlpatterns = [
     re_path(r'^delete_job/$', views.delete_job, name='delete_job'),
     re_path(r'^send_invite/$', views.send_invite, name='send_invite'),
     re_path(r'^upload_file/$', views.upload_file, name='upload_file'),
+    re_path(r'^change_info/$', views.change_info, name='change_info'),
+    re_path(r'^test/$', views.test, name='test'),
     path('job_details/<job_id>/', views.job_details, name='job_details'),
     path('message/<title>/<message>/<redirect_url>/', views.message_page, name='message_page'),
 ]

@@ -146,19 +146,26 @@
             </div>
           </div>
           <div class="w3-quarter">
-            <div class="w3-container w3-grey w3-text-white w3-padding-16">
+            <div class="w3-container w3-grey w3-text-white w3-padding-16 w3-hover-opacity" onclick="document.getElementById('change_info').style.display='block'">
               <div class="w3-left"><i class="fa fa-cog w3-xxxlarge"></i></div>
               <div class="w3-right">
       <!--          <h3>50</h3>-->
               </div>
               <div class="w3-clear"></div>
-              <h4>Settings</h4>
+              <h4>Change Infomaiton</h4>
             </div>
           </div>
     
       </div>
 
-  </div>
+      <header class="w3-container" style="padding-top:22px">
+        <h5><b><i class="fa fa-bar-chart-o"></i> My Map</b></h5>
+      </header>
+      {% block canvas_map %}{% endblock %}
+  
+    </div>
+
+  
   
   
   
@@ -183,6 +190,16 @@
           <p class="w3-left"><label><i class="fa fa-user"></i> Location:</label></p>
           <input class="w3-input w3-border" type="text" name="location" value="{{company_info}}" placeholder="eg: London" required>
 
+          <p class="w3-left"><i class="fa fa-user"></i><label for="work_type"> Work Type:</label></p>
+          
+
+          <select type="text" name="work_type" class="w3-select w3-border" id="work_type">
+            <option value="Engineer">Engineer</option>
+            <option value="Management">Management</option>
+            <option value="Sales">Sales</option>
+            <option value="Others">Others</option>
+          </select>
+
           <p class="w3-left"><label><i class="fa fa-user"></i> Salary:</label></p>
           <input class="w3-input w3-border" type="text" name="salary" placeholder="eg: 12k~20k" required>
 
@@ -192,6 +209,51 @@
           </p>
           <!-- <p><i class="fa fa-fw fa-clock-o"></i>  Posted date: 2020-08-14</p> -->
           <input  type="submit" class="w3-button w3-block w3-teal w3-padding-16 w3-section w3-right"  value="Post" ></i></input>
+  
+      </form>
+
+      </div>
+      <!-- <footer class="w3-container w3-teal">
+        <p>Modal Footer</p>
+      </footer> -->
+    </div>
+  </div>
+
+
+  <div id="change_info" style="display:none" class="w3-modal">
+    <div class="w3-modal-content w3-animate-zoom w3-card-4">
+      <header class="w3-container w3-teal"> 
+        <span onclick="document.getElementById('change_info').style.display='none'" 
+        class="w3-button w3-display-topright">&times;</span>
+        <h2>Change Your Infomation</h2>
+      </header>
+      <div class="w3-container">
+        <form action="/change_info/" method="post" id="new_change_info">
+          <input class="w3-input w3-border" type="text" name="username" value="{{username}}" placeholder="" style="display:none" required>
+          <p class="w3-left"><label><i class="fa fa-user"></i> Work Experience: (one Experience, one line)</label></p>
+          <p>
+            <textarea class="w3-input w3-border" rows="5" cols="60" name="work_experience" value="" form="new_change_info">{{my_info.work_experience}}</textarea>
+          </p>
+
+          <p class="w3-left"><label><i class="fa fa-user"></i> Educational background :(one degree, one line)</label></p>
+          <p>
+            <textarea class="w3-input w3-border" rows="5" cols="60" name="educational_background"  value="" form="new_change_info">{{my_info.educational_background}}</textarea>
+          </p>
+
+          <p class="w3-left"><label><i class="fa fa-user"></i> GPA:</label></p>
+          <input class="w3-input w3-border" type="text" name="gpa" value="{{my_info.gpa}}" placeholder="eg: 3.5" required>
+
+      
+
+          <p class="w3-left"><label><i class="fa fa-user"></i> Expected salary:</label></p>
+          <input class="w3-input w3-border" type="text" name="expected_salary" value="{{my_info.expected_salary}}" placeholder="eg: 20k / 20000" required>
+
+          <p class="w3-left"><label><i class="fa fa-user"></i> Professional certificate: (one certificate, one line)</label></p>
+          <p>
+            <textarea class="w3-input w3-border" rows="5" cols="60" name="professional_certificate"  value="" form="new_change_info">{{my_info.professional_certificate}}</textarea>
+          </p>
+          <!-- <p><i class="fa fa-fw fa-clock-o"></i>  Posted date: 2020-08-14</p> -->
+          <input  type="submit" class="w3-button w3-block w3-teal w3-padding-16 w3-section w3-right"  value="Change" ></i></input>
   
       </form>
 
@@ -276,6 +338,7 @@
 </div>
 
 {% endblock %}
+
 
 {% block init_func %}
 var not_dis_user = document.getElementById('username_storage').innerText;

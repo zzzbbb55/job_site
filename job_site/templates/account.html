@@ -1,0 +1,195 @@
+
+{%extends "dashboard.html" %}
+
+{% block canvas_map %}
+
+  <div class="w3-center w3-container" id = "cav_map" style="overflow:visible">
+    <canvas id = "cav" style="overflow:visible"></canvas>
+</div>
+
+ <a id="work_experience" style="display:none">{{my_info.work_experience}}</a>
+ <a id="educational_background" style="display:none">{{my_info.educational_background}}</a>
+ <a id="gpa" style="display:none">{{my_info.gpa}}</a>
+ <a id="expected_salary" style="display:none">{{my_info.expected_salary}}</a>
+ <a id="professional_certificate" style="display:none">{{my_info.professional_certificate}}</a>
+  
+  <script type="text/javascript">
+      var mW = 500;
+      var mH = 200;
+      var work_experience_points = (document.getElementById("work_experience").innerText.split("\n").length / 5 ) * 100 
+      var educational_background_points  = (document.getElementById("educational_background").innerText.split("\n").length / 2 ) * 100
+      var gpa_points  = ( parseInt(document.getElementById("gpa").innerText) / 4 ) * 100
+      var expected_salary_points  = ( parseInt(document.getElementById("expected_salary").innerText.replace("k","000") ) / 50000 ) * 100
+      var professional_certificate_points = (document.getElementById("professional_certificate").innerText.split("\n").length / 4 ) * 100
+
+      educational_background_points = educational_background_points>=100?100:educational_background_points
+      educational_background_points = educational_background_points>=100?100:educational_background_points
+      educational_background_points = gpa_points>=100?100:gpa_points
+      educational_background_points = expected_salary_points>=100?100:expected_salary_points
+      educational_background_points = professional_certificate_points>=100?100:professional_certificate_points
+      var mData = [
+          ['Work Experience: '+document.getElementById("work_experience").innerText.split("\n").length , work_experience_points],
+          ['Educational background: '+document.getElementById("educational_background").innerText.split("\n").length, educational_background_points],
+          ['GPA: '+document.getElementById("gpa").innerText, gpa_points],
+          ['Expected salary: '+document.getElementById("expected_salary").innerText, expected_salary_points],
+          ['Professional certificate: '+document.getElementById("professional_certificate").innerText.split("\n").length, professional_certificate_points]
+      ];
+      var mCount = mData.length; 
+      var mCenter = mW /2; 
+      var yCenter = mH /2;
+      var mRadius = 80; 
+      var mAngle = Math.PI * 2 / mCount; 
+      var mCtx = null;
+      var mColorPolygon = '#9e9e9e'; 
+      var mColorLines = '#9e9e9e'; 
+      var mColorText = '#000000';
+      start()
+  
+      //初始化
+      function start(){
+        //   var canvas = document.createElement('canvas');
+        //   document.getElementById('cav_map').appendChild(canvas);
+          var canvas = document.getElementById('cav');
+          canvas.height = mH;
+          canvas.width = mW;
+          mCtx = canvas.getContext('2d');
+          drawPolygon(mCtx);
+          drawLines(mCtx);
+          drawRegion(mCtx);
+          drawText(mCtx);
+          drawCircle(mCtx);
+          drawLines1(mCtx)
+      };
+  
+      function drawPolygon(ctx){
+          ctx.save();
+  
+          ctx.strokeStyle = mColorPolygon;
+          var r = mRadius/ mCount; 
+          // var r = mRadius/ (mCount-2);
+          //画5个圈
+          for(var i = 0; i < mCount; i ++){
+           // for(var i = 0; i < mCount-2; i ++){ 
+              ctx.beginPath();
+              var currR = r * ( i + 1); 
+              for(var j = 0; j < mCount; j ++){
+                  var x = mCenter + currR * Math.cos(mAngle * j);
+                  var y = yCenter + currR * Math.sin(mAngle * j);
+  
+                  ctx.lineTo(x, y);
+              }
+              ctx.closePath()
+              ctx.stroke();
+          }
+  
+          ctx.restore();
+      }
+  
+      function drawLines(ctx){
+          ctx.save();
+  
+          ctx.beginPath();
+          ctx.strokeStyle = mColorLines;
+  
+          for(var i = 0; i < mCount; i ++){
+              var x = mCenter + mRadius * Math.cos(mAngle * i);
+              var y = yCenter + mRadius * Math.sin(mAngle * i);
+  
+              ctx.moveTo(mCenter, yCenter);
+              ctx.lineTo(x, y);
+          }
+  
+          ctx.stroke();
+  
+          ctx.restore();
+      }
+  
+      function drawLines1(ctx){
+          ctx.save();
+          ctx.beginPath();
+          var count = 0;
+          for(var i = 0; i < mCount; i ++){
+              var x = mCenter + mRadius * Math.cos(mAngle * i) * mData[i][1] / 100;
+              var y = yCenter + mRadius * Math.sin(mAngle * i) * mData[i][1] / 100;
+              count = i + 1;
+              if (count < mCount) {
+                  var x1 = mCenter + mRadius * Math.cos(mAngle * (i+1)) * mData[i+1][1] / 100;
+                  var y1 = yCenter + mRadius * Math.sin(mAngle * (i+1)) * mData[i+1][1] / 100;
+              }else{
+                  var x1 = mCenter + mRadius * Math.cos(mAngle * 0) * mData[0][1] / 100;
+                  var y1 = yCenter + mRadius * Math.sin(mAngle * 0) * mData[0][1] / 100;
+              }
+              ctx.moveTo(x, y);
+              ctx.lineTo(x1, y1);
+              ctx.lineWidth = 1;          
+              ctx.strokeStyle = '#0000000';  
+          }
+          ctx.stroke();
+  
+          ctx.restore();
+      }
+      function drawText(ctx){
+          ctx.save();
+  
+          var fontSize = 12;
+          ctx.font = fontSize + 'px Microsoft Yahei';
+          ctx.fillStyle = mColorText;
+  
+          for(var i = 0; i < mCount; i ++){
+              var x = mCenter + mRadius * Math.cos(mAngle * i);
+              var y = yCenter + mRadius * Math.sin(mAngle * i);
+  
+              if( mAngle * i >= 0 && mAngle * i <= Math.PI / 2 ){
+                  ctx.fillText(mData[i][0], x, y + fontSize);
+              }else if(mAngle * i > Math.PI / 2 && mAngle * i <= Math.PI){
+                  ctx.fillText(mData[i][0], x - ctx.measureText(mData[i][0]).width, y + fontSize);
+              }else if(mAngle * i > Math.PI && mAngle * i <= Math.PI * 3 / 2){
+                  ctx.fillText(mData[i][0], x - ctx.measureText(mData[i][0]).width, y);
+              }else{
+                  ctx.fillText(mData[i][0], x, y);
+              }
+  
+          }
+          ctx.font="bold 0px Arial"
+          ctx.fillStyle='#1478FA'
+          ctx.fillText("0",mCenter-18,yCenter+16);
+  
+          ctx.restore();
+      }
+  
+      function drawRegion(ctx){
+          ctx.save();
+  
+          ctx.beginPath();
+          for(var i = 0; i < mCount; i ++){
+              var x = mCenter + mRadius * Math.cos(mAngle * i) * mData[i][1] / 100;
+              var y = yCenter + mRadius * Math.sin(mAngle * i) * mData[i][1] / 100;
+  
+              ctx.lineTo(x, y);
+          }
+          ctx.closePath();
+          ctx.fillStyle = 'rgba(139, 139, 139, 0.5)';
+          ctx.fill();
+  
+          ctx.restore();
+      }
+  
+      function drawCircle(ctx){
+          ctx.save();
+  
+          var r = mCenter / 50;
+          for(var i = 0; i < mCount; i ++){
+              var x = mCenter + mRadius * Math.cos(mAngle * i) * mData[i][1] / 100;
+              var y = yCenter + mRadius * Math.sin(mAngle * i) * mData[i][1] / 100;
+  
+              ctx.beginPath();
+              ctx.arc(x, y, r, 0, Math.PI * 2);
+              ctx.fillStyle = 'rgba(139, 139, 139, 0.5)';
+              ctx.fill();
+          }
+  
+          ctx.restore();
+      }
+  </script>
+ {% endblock %}
+
