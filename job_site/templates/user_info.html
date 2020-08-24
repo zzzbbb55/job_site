@@ -81,11 +81,11 @@
       var expected_salary_points  = ( parseInt(document.getElementById("expected_salary").innerText.replace("k","000") ) / 50000 ) * 100
       var professional_certificate_points = document.getElementById("professional_certificate").innerText == ""?0 : (document.getElementById("professional_certificate").innerText.split("\n").length / 4 ) * 100
 
+      work_experience_length = work_experience_length>=100?100:work_experience_length
       educational_background_points = educational_background_points>=100?100:educational_background_points
-      educational_background_points = educational_background_points>=100?100:educational_background_points
-      educational_background_points = gpa_points>=100?100:gpa_points
-      educational_background_points = expected_salary_points>=100?100:expected_salary_points
-      educational_background_points = professional_certificate_points>=100?100:professional_certificate_points
+      gpa_points = gpa_points>=100?100:gpa_points
+      expected_salary_points = expected_salary_points>=100?100:expected_salary_points
+      professional_certificate_points = professional_certificate_points>=100?100:professional_certificate_points
 
 
       var mData = [
