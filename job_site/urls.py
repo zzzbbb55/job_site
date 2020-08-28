@@ -34,6 +34,7 @@ urlpatterns = [
     re_path(r'^upload_file/$', views.upload_file, name='upload_file'),
     re_path(r'^change_info/$', views.change_info, name='change_info'),
     re_path(r'^test/$', views.test, name='test'),
+    re_path(r'^user_info/$', views.user_info, name='user_info'),
     path('job_details/<job_id>/', views.job_details, name='job_details'),
     path('message/<title>/<message>/<redirect_url>/', views.message_page, name='message_page'),
 ]
