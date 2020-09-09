@@ -103,7 +103,7 @@ def account(request):
     context =  get_user_name_and_type(request)
     username = context["username"]
     usertype = context["user_type"]
-    if usertype == "candidate":
+    if usertype == "Job Seeker":
         job_list = job_item.objects.filter(interview_resume__contains=username).order_by("posted_date").reverse()
         sent_resume_list = job_item.objects.filter(received_resume__contains=username).order_by("posted_date").reverse()
         interview_list = []
@@ -129,7 +129,7 @@ def account(request):
         context["my_info"]["gpa"] = query_user.gpa
         context["my_info"]["expected_salary"] = query_user.expected_salary 
         context["my_info"]["professional_certificate"] = query_user.professional_certificate  
-    elif usertype == "recruiter":
+    elif usertype == "Recruiter":
         query_company = recruiter.objects.filter(company_name=username)[0]
         context["company_name"] = query_company.company_name
         context["company_info"] = query_company.info
@@ -169,34 +169,34 @@ def user_login(request):
                     password = request.POST['password']
                     message = ""
                 else:
-                    raise Exception('error: empty password')
+                    raise Exception('Error: empty password')
             else:
-                 raise Exception('error: empty user name')
+                 raise Exception('Error: empty user name')
             query_user = User.objects.filter(username=username)
             query_company = recruiter.objects.filter(company_name=username)
             if len(query_user) >= 1:
-                user_type = "candidate"
+                user_type = "Job Seeker"
                 query_list = query_user
             elif len(query_company) >= 1:
-                user_type = "recruiter"
+                user_type = "Recruiter"
                 query_list = query_company
             else:
-                raise Exception("error: user not existed, please register.")  
+                raise Exception("Error: user not existed, please register.")  
             if query_list[0].password == password:
                 request.session['user'] = {}
                 request.session['user']["name"] = username
                 request.session['user']["user_type"] = user_type
             else:
-                raise Exception("error: wrong password")  
+                raise Exception("Error: wrong password")  
             
-            if user_type == "recruiter":
+            if user_type == "Recruiter":
                 return redirect("/message/ok/%s_has_login/recruiter_page/" % username.replace(" ","_"))
             else:
                 return redirect("/message/ok/%s_has_login/index/" % username.replace(" ","_"))
 
                 
         else:
-            raise Exception("not support get")
+            raise Exception("Not support get")
     except Exception as e:
         message= str(e)
         message = message.replace(" ","_")
@@ -213,8 +213,8 @@ def user_register(request):
         massage = "pass"
         print (request.POST["people_type"])
         if "/" in request.POST["username"]:
-            raise Exception("error : illegal character '/' ")
-        if request.POST["people_type"] == "candidate":
+            raise Exception("Error : illegal character '/' ")
+        if request.POST["people_type"] == "Job Seeker":
             username = request.POST["username"]
             if request.POST["password"] == request.POST["password_confirm"]:
                 password = request.POST["password"]
@@ -222,9 +222,9 @@ def user_register(request):
                     new_user = User(username=username,password=password,resume_url="")
                     new_user.save()
                 else:
-                    raise ( "error : user existed, please login")
+                    raise ( "Error : user existed, please login")
             else:
-                raise ( "error : password is not same as password_confirm")
+                raise ( "Error : password is not same as password_confirm")
         else:
             company_name = request.POST["username"]
             
@@ -236,9 +236,9 @@ def user_register(request):
                     new_company = recruiter(company_name=company_name,password=password,info=company_location,describe=company_description,user_type="recruiter")
                     new_company.save()
                 else:
-                    raise ( "error : company existed, please login")
+                    raise ( "Error : company existed, please login")
             else:
-                raise ( "error : password is not same as password_confirm")
+                raise ( "Error : password is not same as password_confirm")
         return redirect("/message/ok/user_has_been_added/login/" )
     except Exception as e:
         message = str(e)
