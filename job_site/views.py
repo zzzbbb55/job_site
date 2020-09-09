@@ -103,7 +103,7 @@ def account(request):
     context =  get_user_name_and_type(request)
     username = context["username"]
     usertype = context["user_type"]
-    if usertype == "Job Seeker":
+    if usertype == "candidate":
         job_list = job_item.objects.filter(interview_resume__contains=username).order_by("posted_date").reverse()
         sent_resume_list = job_item.objects.filter(received_resume__contains=username).order_by("posted_date").reverse()
         interview_list = []
@@ -129,7 +129,7 @@ def account(request):
         context["my_info"]["gpa"] = query_user.gpa
         context["my_info"]["expected_salary"] = query_user.expected_salary 
         context["my_info"]["professional_certificate"] = query_user.professional_certificate  
-    elif usertype == "Recruiter":
+    elif usertype == "recruiter":
         query_company = recruiter.objects.filter(company_name=username)[0]
         context["company_name"] = query_company.company_name
         context["company_info"] = query_company.info
@@ -169,34 +169,34 @@ def user_login(request):
                     password = request.POST['password']
                     message = ""
                 else:
-                    raise Exception('Error: empty password')
+                    raise Exception('error: empty password')
             else:
-                 raise Exception('Error: empty user name')
+                 raise Exception('error: empty user name')
             query_user = User.objects.filter(username=username)
             query_company = recruiter.objects.filter(company_name=username)
             if len(query_user) >= 1:
-                user_type = "Job Seeker"
+                user_type = "candidate"
                 query_list = query_user
             elif len(query_company) >= 1:
-                user_type = "Recruiter"
+                user_type = "recruiter"
                 query_list = query_company
             else:
-                raise Exception("Error: user not existed, please register.")  
+                raise Exception("error: user not existed, please register.")  
             if query_list[0].password == password:
                 request.session['user'] = {}
                 request.session['user']["name"] = username
                 request.session['user']["user_type"] = user_type
             else:
-                raise Exception("Error: wrong password")  
+                raise Exception("error: wrong password")  
             
-            if user_type == "Recruiter":
+            if user_type == "recruiter":
                 return redirect("/message/ok/%s_has_login/recruiter_page/" % username.replace(" ","_"))
             else:
                 return redirect("/message/ok/%s_has_login/index/" % username.replace(" ","_"))
 
                 
         else:
-            raise Exception("Not support get")
+            raise Exception("not support get")
     except Exception as e:
         message= str(e)
         message = message.replace(" ","_")
@@ -222,9 +222,9 @@ def user_register(request):
                     new_user = User(username=username,password=password,resume_url="")
                     new_user.save()
                 else:
-                    raise ( "Error : user existed, please login")
+                    raise ( "error : user existed, please login")
             else:
-                raise ( "Error : password is not same as password_confirm")
+                raise ( "error : password is not same as password_confirm")
         else:
             company_name = request.POST["username"]
             
@@ -236,9 +236,9 @@ def user_register(request):
                     new_company = recruiter(company_name=company_name,password=password,info=company_location,describe=company_description,user_type="recruiter")
                     new_company.save()
                 else:
-                    raise ( "Error : company existed, please login")
+                    raise ( "error : company existed, please login")
             else:
-                raise ( "Error : password is not same as password_confirm")
+                raise ( "error : password is not same as password_confirm")
         return redirect("/message/ok/user_has_been_added/login/" )
     except Exception as e:
         message = str(e)
