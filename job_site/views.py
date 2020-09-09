@@ -214,7 +214,7 @@ def user_register(request):
         print (request.POST["people_type"])
         if "/" in request.POST["username"]:
             raise Exception("Error : illegal character '/' ")
-        if request.POST["people_type"] == "Job Seeker":
+        if request.POST["people_type"] == "candidate":
             username = request.POST["username"]
             if request.POST["password"] == request.POST["password_confirm"]:
                 password = request.POST["password"]
