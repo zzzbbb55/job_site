@@ -23,9 +23,9 @@
       
 
       var work_experience_points = document.getElementById("work_experience").innerText == ""?0 : (document.getElementById("work_experience").innerText.split("\n").length / 5 ) * 100 
-      var educational_background_points  = document.getElementById("educational_background").innerText == ""?0 : (document.getElementById("educational_background").innerText.split("\n").length / 2 ) * 100
+      var educational_background_points  = document.getElementById("educational_background").innerText == ""?0 : (document.getElementById("educational_background").innerText.split("\n").length / 4 ) * 100
       var gpa_points  = ( parseInt(document.getElementById("gpa").innerText) / 4 ) * 100
-      var expected_salary_points  = ( parseInt(document.getElementById("expected_salary").innerText.replace("k","000") ) / 50000 ) * 100
+      var expected_salary_points  = ( parseInt(document.getElementById("expected_salary").innerText.replace("k","000") ) / 5000 ) * 100
       var professional_certificate_points = document.getElementById("professional_certificate").innerText == ""?0 : (document.getElementById("professional_certificate").innerText.split("\n").length / 4 ) * 100
 
       work_experience_length = work_experience_length>=100?100:work_experience_length
@@ -53,7 +53,7 @@
       var mColorText = '#000000';
       start()
   
-      //初始化
+      // Initialize
       function start(){
         //   var canvas = document.createElement('canvas');
         //   document.getElementById('cav_map').appendChild(canvas);
@@ -75,7 +75,7 @@
           ctx.strokeStyle = mColorPolygon;
           var r = mRadius/ mCount; 
           // var r = mRadius/ (mCount-2);
-          //画5个圈
+          // draw 5 circles
           for(var i = 0; i < mCount; i ++){
            // for(var i = 0; i < mCount-2; i ++){ 
               ctx.beginPath();
