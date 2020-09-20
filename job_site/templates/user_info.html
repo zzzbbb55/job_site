@@ -17,34 +17,34 @@
 <hr>
 <div id= "candidate_table" class="w3-container" style="width: 80%; ">
 
-<h5>The Information</h5>
+<h5>Candidate Information</h5>
 <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
     <tr>
         <td>Name</td>
         <td><i class="fa fa-user w3-text-green"></i> {{user_info_name}}</td>
     </tr>
     <tr>
-        <td>type</td>
+        <td>Type</td>
         <td><i class="fa fa-group w3-text-blue-gray"></i>  {{user_type}}</td>
     </tr>
     <tr>
-        <td>work_experience</td>
+        <td>Work Experience</td>
         <td><div style="white-space: pre-line; ">{{my_info.work_experience}}</div></td>
     </tr>
     <tr>
-        <td>educational_background</td>
+        <td>Educational Background</td>
         <td><div style="white-space: pre-line; ">{{my_info.educational_background}}</div> </td>
     </tr>
     <tr>
-        <td>gpa</td>
+        <td>GPA</td>
         <td> <a class="w3-text-blue" ><i class="fa fa-download-cyan"></i> {{my_info.gpa}}</a></td>
     </tr>  
     <tr>
-        <td>expected_salary</td>
+        <td>Expected Salary</td>
         <td><div style="white-space: pre-line; ">{{my_info.expected_salary}}</div> </td>
     </tr> 
     <tr>
-        <td>professional_certificate</td>
+        <td>Professional Certificate</td>
         <td><div style="white-space: pre-line; ">{{my_info.professional_certificate}}</div>
              </td>
     </tr>   
@@ -76,9 +76,9 @@
       
 
       var work_experience_points = document.getElementById("work_experience").innerText == ""?0 : (document.getElementById("work_experience").innerText.split("\n").length / 5 ) * 100 
-      var educational_background_points  = document.getElementById("educational_background").innerText == ""?0 : (document.getElementById("educational_background").innerText.split("\n").length / 2 ) * 100
+      var educational_background_points  = document.getElementById("educational_background").innerText == ""?0 : (document.getElementById("educational_background").innerText.split("\n").length / 3 ) * 100
       var gpa_points  = ( parseInt(document.getElementById("gpa").innerText) / 4 ) * 100
-      var expected_salary_points  = ( parseInt(document.getElementById("expected_salary").innerText.replace("k","000") ) / 50000 ) * 100
+      var expected_salary_points  = ( parseInt(document.getElementById("expected_salary").innerText.replace("k","000") ) / 5000 ) * 100
       var professional_certificate_points = document.getElementById("professional_certificate").innerText == ""?0 : (document.getElementById("professional_certificate").innerText.split("\n").length / 4 ) * 100
 
       work_experience_length = work_experience_length>=100?100:work_experience_length
@@ -106,7 +106,6 @@
       var mColorText = '#000000';
       start()
   
-      //初始化
       function start(){
         //   var canvas = document.createElement('canvas');
         //   document.getElementById('cav_map').appendChild(canvas);
@@ -128,7 +127,7 @@
           ctx.strokeStyle = mColorPolygon;
           var r = mRadius/ mCount; 
           // var r = mRadius/ (mCount-2);
-          //画5个圈
+          // draw 5 circles
           for(var i = 0; i < mCount; i ++){
            // for(var i = 0; i < mCount-2; i ++){ 
               ctx.beginPath();

@@ -222,25 +222,25 @@
       <div class="w3-container">
         <form action="/change_info/" method="post" id="new_change_info">
           <input class="w3-input w3-border" type="text" name="username" value="{{username}}" placeholder="" style="display:none" required>
-          <p class="w3-left"><label><i class="fa fa-user"></i> Work Experience: (one Experience, one line)</label></p>
+          <p class="w3-left"><label><i class="fa fa-user"></i> Work Experience: (one experience, one line)</label></p>
           <p>
             <textarea class="w3-input w3-border" rows="5" cols="60" name="work_experience" value="" form="new_change_info">{{my_info.work_experience}}</textarea>
           </p>
 
-          <p class="w3-left"><label><i class="fa fa-user"></i> Educational background :(one degree, one line)</label></p>
+          <p class="w3-left"><label><i class="fa fa-user"></i> Educational Background :(one degree, one line)</label></p>
           <p>
             <textarea class="w3-input w3-border" rows="5" cols="60" name="educational_background"  value="" form="new_change_info">{{my_info.educational_background}}</textarea>
           </p>
 
-          <p class="w3-left"><label><i class="fa fa-user"></i> GPA:</label></p>
+          <p class="w3-left"><label><i class="fa fa-user"></i> GPA: (up to 4)</label></p>
           <input class="w3-input w3-border" type="text" name="gpa" value="{{my_info.gpa}}" placeholder="eg: 3.5" required>
 
       
 
-          <p class="w3-left"><label><i class="fa fa-user"></i> Expected salary:</label></p>
-          <input class="w3-input w3-border" type="text" name="expected_salary" value="{{my_info.expected_salary}}" placeholder="eg: 20k / 20000" required>
+          <p class="w3-left"><label><i class="fa fa-user"></i> Expected Salary:</label></p>
+          <input class="w3-input w3-border" type="text" name="expected_salary" value="{{my_info.expected_salary}}" placeholder="eg: 2k / 2000" required>
 
-          <p class="w3-left"><label><i class="fa fa-user"></i> Professional certificate: (one certificate, one line)</label></p>
+          <p class="w3-left"><label><i class="fa fa-user"></i> Professional Certificate: (one certificate, one line)</label></p>
           <p>
             <textarea class="w3-input w3-border" rows="5" cols="60" name="professional_certificate"  value="" form="new_change_info">{{my_info.professional_certificate}}</textarea>
           </p>
